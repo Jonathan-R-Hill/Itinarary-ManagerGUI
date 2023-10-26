@@ -27,6 +27,7 @@ public class MainPhase2 {
       FileOperations addActivityToFile = new FileOperations("activities.txt", false);
       addActivityToFile.checkCreateFile();
       addActivity.collectInformation(userInput, addActivityToFile);
+
     }
   }
 

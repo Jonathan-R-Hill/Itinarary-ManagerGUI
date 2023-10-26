@@ -185,16 +185,18 @@ public class NewActivityInput {
      */
     boolean check = true;
     String checkHappy = "";
-
+    int durationHours = 0;
+    int durationMinutes = 0;
+    
     while (check) {
       try {
         System.out.println("Please enter how long the event is expected to last (cannot be a negative number): ");
         System.out.print("Hours: ");
-        int durationHours = userInput.nextInt();
+        durationHours = userInput.nextInt();
         userInput.nextLine(); // consume the new line char or any input that is leftover
 
         System.out.print("\nMinutes: ");
-        int durationMinutes = userInput.nextInt();
+        durationMinutes = userInput.nextInt();
         userInput.nextLine(); // consume the new line char or any input that is leftover
 
         float convertedMinutes = durationMinutes / 60.00f; // Convert the minutes to decimal value
@@ -214,16 +216,16 @@ public class NewActivityInput {
           check = false;
           setExpectedDuration(totalTime);
         } else {
-          totalTime = -1.00f;
-          durationHours = -1;
-          durationMinutes = -1;
           checkHappy = "";
-          userInput.nextLine(); // consume the new line char or any input that is leftover
         }
 
       } catch (InputMismatchException error) {
-        System.err.println(error);
+        userInput.nextLine();
+        System.out.println(error + "\n");
         System.out.println("Please enter a number greater than or equal to 0");
+        durationHours = 0;
+        durationMinutes = 0;
+        
       }
 
     }
@@ -318,6 +320,7 @@ public class NewActivityInput {
     String checkHappy = "";
     int hours = 0;
     int minutes = 0;
+
     while (check) {
       System.out.println("Please enter the time the activity will take place in the format \"HH:MM\"."
               + "For example: to enter 2PM enter: 14:00 ");
@@ -337,8 +340,17 @@ public class NewActivityInput {
           }
         } catch (NumberFormatException e) {
           System.err.println(e);
-          System.out.println("Please re-enter your time/");
+          System.out.println("Please re-enter your time");
           checkHappy = "no";
+          hours = -1;
+          minutes = -1;
+          userInput.nextLine();
+        } catch (InputMismatchException e) {
+          System.err.println(e);
+          System.out.println("Please re-enter your time");
+          checkHappy = "no";
+          hours = -1;
+          minutes = -1;
         }
       }
 
@@ -406,7 +418,7 @@ public class NewActivityInput {
 
     return output;
   }
-  
+
   // TODO Doc String
   private boolean addAnother(Scanner userInput) {
     boolean again = false;
@@ -419,6 +431,7 @@ public class NewActivityInput {
 
     return again;
   }
+
   // TODO Bug test --- Doc String
   public void collectInformation(Scanner userInput, FileOperations file) {
     String running = takeUserInput(userInput);
