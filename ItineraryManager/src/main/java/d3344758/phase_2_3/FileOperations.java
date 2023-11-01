@@ -50,8 +50,8 @@ public class FileOperations {
      *
      * @param information The data to be written to the file.
      */
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-      writer.write(information);
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
+      writer.append(information + "\n");
       System.out.println("Write operation was successful!");
     } catch (IOException error) {
       error.printStackTrace();

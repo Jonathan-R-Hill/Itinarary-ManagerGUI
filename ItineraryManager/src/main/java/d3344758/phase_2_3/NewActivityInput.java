@@ -9,7 +9,9 @@ import java.util.Scanner;
  * @author Jonathan Hill (d3344758)
  */
 public class NewActivityInput {
-
+  
+  // TODO change checkhappy to method overloaded to take getters
+  
   private String activityName;
   private String activityCode;
   private float baseCost;
@@ -46,11 +48,10 @@ public class NewActivityInput {
         check = false;
         setActivityName(activityname);
       } else {
-        activityname = "";
         checkHappy = "";
       }
     }
-    System.out.printf("Your title: \"%s\" was accepted.\n", getActivityName());
+    System.out.println();
   }
 
   private void activityCode(Scanner userInput) {
@@ -67,7 +68,7 @@ public class NewActivityInput {
 
     while (check) {
       System.out.println("Please enter the activity code in the format: abc-00 (3 letters hyphen 2 digits)");
-      String activityCode = userInput.nextLine().strip().trim();
+      String activityCode = userInput.nextLine().strip().trim().toUpperCase();
 
       String[] splitCode = activityCode.split("-");
       if (splitCode.length != 2 || splitCode[0].length() != 3 || splitCode[1].length() != 2
@@ -113,7 +114,7 @@ public class NewActivityInput {
         if (activityPrice >= 0.00) {
           userInput.nextLine(); // consume the new line char or any input that is leftover
           while (!checkHappy.equals("yes") && !checkHappy.equals("no")) {
-            System.out.println("Are you happy with the price: " + activityPrice + "?\t yes or no");
+            System.out.printf("Are you happy with the price: %.2f?\t yes or no", activityPrice);
             checkHappy = userInput.nextLine().toLowerCase();
           }
 
@@ -135,7 +136,6 @@ public class NewActivityInput {
         userInput.nextLine();
       }
     }
-    System.out.printf("Your price: \"%.2f\" was accepted.\n", getBaseCost());
   }
 
   private void activityLocation(Scanner userInput) {
@@ -168,7 +168,6 @@ public class NewActivityInput {
         checkHappy = "";
       }
     }
-    System.out.printf("Your activity Location: \" %s\" was accpted.\n", getLocation());
   }
 
   private void activityDuration(Scanner userInput) {
@@ -187,7 +186,7 @@ public class NewActivityInput {
     String checkHappy = "";
     int durationHours = 0;
     int durationMinutes = 0;
-    
+
     while (check) {
       try {
         System.out.println("Please enter how long the event is expected to last (cannot be a negative number): ");
@@ -225,11 +224,10 @@ public class NewActivityInput {
         System.out.println("Please enter a number greater than or equal to 0");
         durationHours = 0;
         durationMinutes = 0;
-        
+
       }
 
     }
-    System.out.printf("Your activities expected duration \"%.2f\" Hours was accepted.\n", getExpectedDuration());
   }
 
   private void activityDays(Scanner userInput) {
@@ -395,7 +393,6 @@ public class NewActivityInput {
         description = "";
         checkHappy = "";
       }
-
     }
   }
 
@@ -507,7 +504,7 @@ public class NewActivityInput {
   }
 
   private String getStartTime() {
-    return days;
+    return this.startTime;
   }
 
   private void setStartTime(String startTime) {
