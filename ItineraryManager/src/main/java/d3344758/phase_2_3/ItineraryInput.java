@@ -36,8 +36,7 @@ public class ItineraryInput {
 
   }
 
-  // TODO method add codes and activities to separate array
-  // fetch codes from file  
+  // TODO method
   private void inputActivities(Scanner userInput) {
 
   }
@@ -45,16 +44,6 @@ public class ItineraryInput {
   // TODO method
   private void fetchActivityCodes() {
 
-  }
-  
-  // TODO method
-  private void Insurance(Scanner userInput) {
-    
-  }
-  
-  // TODO method 
-  private void addOns(Scanner userInput) {
-    
   }
 
   // ---------- Getters/Setters below ---------- //

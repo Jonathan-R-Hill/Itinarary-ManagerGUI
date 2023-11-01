@@ -9,9 +9,7 @@ import java.util.Scanner;
  * @author Jonathan Hill (d3344758)
  */
 public class NewActivityInput {
-  
-  // TODO change checkhappy to method overloaded to take getters
-  
+
   private String activityName;
   private String activityCode;
   private float baseCost;
@@ -33,16 +31,12 @@ public class NewActivityInput {
      * @param userInput A Scanner object to read user input.
      */
     boolean check = true;
-    String checkHappy = "";
 
     while (check) {
       System.out.println("Please enter the name of your activity");
       String activityname = userInput.nextLine();
 
-      while (!checkHappy.equals("yes") && !checkHappy.equals("no")) {
-        System.out.println("Are you happy with the name: " + activityname + "?\t yes or no");
-        checkHappy = userInput.nextLine().toLowerCase();
-      }
+      String checkHappy = CheckHappy.checkHappy(userInput, activityname);
 
       if (checkHappy.equals("yes")) {
         check = false;
@@ -74,10 +68,9 @@ public class NewActivityInput {
       if (splitCode.length != 2 || splitCode[0].length() != 3 || splitCode[1].length() != 2
               || !splitCode[0].matches("[a-zA-Z]+") || !splitCode[1].matches("\\d+")) {
         checkHappy = "no";
-      }
-      while (!checkHappy.equals("yes") && !checkHappy.equals("no")) {
-        System.out.println("Are you happy with the code: " + activityCode + "?\t yes or no");
-        checkHappy = userInput.nextLine().toLowerCase();
+        System.out.println("Please ensure you are entering the code correctly.");
+      } else {
+        checkHappy = CheckHappy.checkHappy(userInput, activityCode);
       }
 
       if (checkHappy.equals("yes")) {
@@ -113,10 +106,7 @@ public class NewActivityInput {
         float activityPrice = userInput.nextFloat();
         if (activityPrice >= 0.00) {
           userInput.nextLine(); // consume the new line char or any input that is leftover
-          while (!checkHappy.equals("yes") && !checkHappy.equals("no")) {
-            System.out.printf("Are you happy with the price: %.2f?\t yes or no", activityPrice);
-            checkHappy = userInput.nextLine().toLowerCase();
-          }
+          checkHappy = CheckHappy.checkHappy(userInput, activityPrice);
 
           if (checkHappy.equals("yes")) {
             check = false;
@@ -131,7 +121,7 @@ public class NewActivityInput {
           userInput.nextLine();
         }
       } catch (InputMismatchException error) {
-        System.err.println(error);
+        System.out.println(error);
         System.out.println("Please enter a number greater than or equal to 0");
         userInput.nextLine();
       }
@@ -156,10 +146,8 @@ public class NewActivityInput {
       System.out.println("Please enter the location of the activity: ");
       String activityLocation = userInput.nextLine();
 
-      while (!checkHappy.equals("yes") && !checkHappy.equals("no")) {
-        System.out.println("Are you happy with the location: \"" + activityLocation + "\"?\t yes or no");
-        checkHappy = userInput.nextLine().toLowerCase();
-      }
+      checkHappy = CheckHappy.checkHappy(userInput, activityLocation);
+
       if (checkHappy.equals("yes")) {
         check = false;
         setLocation(activityLocation);
@@ -198,19 +186,20 @@ public class NewActivityInput {
         durationMinutes = userInput.nextInt();
         userInput.nextLine(); // consume the new line char or any input that is leftover
 
-        float convertedMinutes = durationMinutes / 60.00f; // Convert the minutes to decimal value
+        float convertedMinutes = 0.0f;
+        if (durationMinutes != 0) {
+          convertedMinutes = (float) durationMinutes / 60.00f; // Convert the minutes to decimal value
+        }
         float totalTime = (float) durationHours + (float) convertedMinutes;
 
         if (durationHours < 0 || durationMinutes < 0 || durationMinutes > 59) {
           checkHappy = "no";
           System.out.println("Please re-enter your time. Please do not enter negative numbers and "
                   + "ensure you are not entering more than 59 minutes.");
+        } else {
+          checkHappy = CheckHappy.checkHappy(userInput, durationHours, durationMinutes);
         }
-        while (!checkHappy.equals("yes") && !checkHappy.equals("no")) {
-          System.out.println("Are you happy with the duration: \"" + durationHours + " Hours  "
-                  + durationMinutes + " Minutes\"? (" + totalTime + ")\t yes or no");
-          checkHappy = userInput.nextLine().toLowerCase();
-        }
+
         if (checkHappy.equals("yes")) {
           check = false;
           setExpectedDuration(totalTime);
@@ -289,12 +278,14 @@ public class NewActivityInput {
         }
         indexDays++;
       }
+
       String days = String.join(",", daysArray);
       days = days.replaceAll("\\s", "");
-      while (!checkHappy.equals("yes") && !checkHappy.equals("no")) {
-        System.out.println("Are you happy with the days: \"" + days + "\"?\t yes or no");
-        checkHappy = userInput.nextLine().toLowerCase();
+
+      if (checkHappy != "no") {
+        checkHappy = CheckHappy.checkHappy(userInput, days);
       }
+
       if (checkHappy.equals("yes")) {
         check = false;
         setDays(days);
@@ -337,14 +328,14 @@ public class NewActivityInput {
             System.out.println("Please ensure your hours range is between 0 - 23 and minutes is between 0 - 59");
           }
         } catch (NumberFormatException e) {
-          System.err.println(e);
+          System.out.println(e);
           System.out.println("Please re-enter your time");
           checkHappy = "no";
           hours = -1;
           minutes = -1;
           userInput.nextLine();
         } catch (InputMismatchException e) {
-          System.err.println(e);
+          System.out.println(e);
           System.out.println("Please re-enter your time");
           checkHappy = "no";
           hours = -1;
@@ -352,10 +343,10 @@ public class NewActivityInput {
         }
       }
 
-      while (!checkHappy.equals("yes") && !checkHappy.equals("no")) {
-        System.out.println("Are you happy with the start time: : \"" + time + "\"?\t yes or no");
-        checkHappy = userInput.nextLine().toLowerCase();
+      if (checkHappy != "no") {
+        checkHappy = CheckHappy.checkHappy(userInput, time);
       }
+
       if (checkHappy.equals("yes")) {
         check = false;
         setStartTime(time);
@@ -382,10 +373,8 @@ public class NewActivityInput {
       System.out.println("Please enter a short description of the activity " + getActivityName() + ": ");
       String description = userInput.nextLine();
 
-      while (!checkHappy.equals("yes") && !checkHappy.equals("no")) {
-        System.out.println("Are you happy with the description:\n\"" + description + "\"\n yes or no");
-        checkHappy = userInput.nextLine().toLowerCase();
-      }
+      checkHappy = CheckHappy.checkHappy(userInput, description);
+
       if (checkHappy.equals("yes")) {
         check = false;
         setGeneralDescription(description);
@@ -396,8 +385,15 @@ public class NewActivityInput {
     }
   }
 
-  // TODO Doc String
   private String takeUserInput(Scanner userInput) {
+    /**
+     * Takes user input for various activity details including title, code,
+     * location, start time, duration, days, price, and description using the
+     * provided Scanner object.
+     *
+     * @param userInput A Scanner object to read user input.
+     * @return A formatted string containing the entered activity details.
+     */
     activityTitle(userInput);
     activityCode(userInput);
     activityLocation(userInput);
@@ -416,9 +412,13 @@ public class NewActivityInput {
     return output;
   }
 
-  // TODO Doc String
   private boolean addAnother(Scanner userInput) {
-    boolean again = false;
+    /**
+     * Prompts the user to decide whether they want to enter another activity.
+     *
+     * @param userInput A Scanner object to read user input.
+     * @return true if the user wants to add another activity, false otherwise.
+     */
     String checkAgain = "";
 
     while (!checkAgain.equals("yes") && !checkAgain.equals("no")) {
@@ -426,7 +426,11 @@ public class NewActivityInput {
       checkAgain = userInput.nextLine();
     }
 
-    return again;
+    if (checkAgain.equals("yes")) {
+      return true;
+    }
+
+    return false;
   }
 
   // TODO Bug test --- Doc String
@@ -448,8 +452,13 @@ public class NewActivityInput {
       System.out.println("Are you happy with these details? if not we will start over.  yes or no");
       checkHappy = userInput.nextLine();
     }
+
     if (checkHappy.equals("yes")) {
       file.writeToFile(running);
+      boolean again = addAnother(userInput);
+      if (again) {
+        collectInformation(userInput, file);
+      }
     } else {
       setBaseCost(-1.00f);
       setDays("");
@@ -459,6 +468,7 @@ public class NewActivityInput {
       setActivityName("");
       setActivityCode("");
       setGeneralDescription("");
+      collectInformation(userInput, file);
     }
   }
 
