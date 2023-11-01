@@ -1,0 +1,2 @@
+activity: Cookery Class	code: COO-10	location: Site Kitchen	start: 12:00	duration: 2.25	days: mon,tue,wed,thu,fri	price: 15.00	description: A class where you learn to cook and make various dishes
+activity: SAS Assault Course	code: SAS-50	location: Assault Course	start: 15:30	duration: 2.00	days: mon,wed,fri	price: 20.50	description: A course based on SAS training courses for you to complete
