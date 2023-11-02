@@ -114,7 +114,6 @@ public class NewActivityInput {
           } else {
             activityPrice = -1.00f;
             checkHappy = "";
-            userInput.nextLine(); // consume the new line char or any input that is leftover
           }
         } else {
           System.out.println("Please enter a number great than or equal to 0.");
@@ -296,7 +295,7 @@ public class NewActivityInput {
     }
   }
 
-  private void activityTime(Scanner userInput) {
+  public void activityTime(Scanner userInput) {
     /**
      * Prompts the user to enter the time when the activity will take place in
      * the format "HH:MM". Validates the input format and checks if the entered
@@ -311,6 +310,7 @@ public class NewActivityInput {
     int minutes = 0;
 
     while (check) {
+      checkHappy = "";
       System.out.println("Please enter the time the activity will take place in the format \"HH:MM\"."
               + "For example: to enter 2PM enter: 14:00 ");
       String time = userInput.nextLine();
@@ -318,7 +318,7 @@ public class NewActivityInput {
 
       if (timeArrayStrings.length != 2) {
         checkHappy = "no";
-        System.out.println("Please ensure you sue the correct format");
+        System.out.println("Please ensure you sure the correct format");
       } else {
         try {
           hours = Integer.parseInt(timeArrayStrings[0]);
@@ -333,7 +333,6 @@ public class NewActivityInput {
           checkHappy = "no";
           hours = -1;
           minutes = -1;
-          userInput.nextLine();
         } catch (InputMismatchException e) {
           System.out.println(e);
           System.out.println("Please re-enter your time");
@@ -343,16 +342,27 @@ public class NewActivityInput {
         }
       }
 
-      if (checkHappy != "no") {
-        checkHappy = CheckHappy.checkHappy(userInput, time);
-      }
+      if (timeArrayStrings.length == 2) {
+        // Adding 0's to the start of any digits that are not 10+ for 24h time
+        if (timeArrayStrings[1].length() < 2 || timeArrayStrings[0].length() < 2) {
+          if (timeArrayStrings[1].length() < 2) {
+            timeArrayStrings[1] = "0" + timeArrayStrings[1];
+          }
+          if (timeArrayStrings[0].length() < 2) {
+            timeArrayStrings[0] = "0" + timeArrayStrings[0];
+          }
+        }
 
-      if (checkHappy.equals("yes")) {
-        check = false;
-        setStartTime(time);
-      } else {
-        time = "";
-        checkHappy = "";
+        String timeToStore = String.join(":", timeArrayStrings);
+
+        if (!checkHappy.equals("no")) {
+          checkHappy = CheckHappy.checkHappy(userInput, timeToStore);
+        }
+
+        if (checkHappy.equals("yes")) {
+          check = false;
+          setStartTime(timeToStore);
+        }
       }
     }
   }
@@ -433,7 +443,7 @@ public class NewActivityInput {
     return false;
   }
 
-  // TODO Bug test --- Doc String
+  // TODO Doc String
   public void collectInformation(Scanner userInput, FileOperations file) {
     String running = takeUserInput(userInput);
 
