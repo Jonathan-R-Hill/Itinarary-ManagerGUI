@@ -1,6 +1,5 @@
 package d3344758.phase_2_3;
 
-import java.io.File;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -15,21 +14,20 @@ public class NewActivityInput {
   private float baseCost;
   private String location;
   private float expectedDuration;
-  private String days;
   private String startTime;
   private String generalDescription;
 
+  /**
+   * Prompts the user to enter the name of their activity through the provided
+   * Scanner object. The user is given the option to confirm or change the
+   * entered activity name. If the user confirms the name by typing "yes", the
+   * provided activity name is accepted and stored. If the user types "no", they
+   * can re-enter the activity name. The method loops until the user confirms
+   * the entered activity name.
+   *
+   * @param userInput A Scanner object to read user input.
+   */
   private void activityTitle(Scanner userInput) {
-    /**
-     * Prompts the user to enter the name of their activity through the provided
-     * Scanner object. The user is given the option to confirm or change the
-     * entered activity name. If the user confirms the name by typing "yes", the
-     * provided activity name is accepted and stored. If the user types "no",
-     * they can re-enter the activity name. The method loops until the user
-     * confirms the entered activity name.
-     *
-     * @param userInput A Scanner object to read user input.
-     */
     boolean check = true;
 
     while (check) {
@@ -48,15 +46,15 @@ public class NewActivityInput {
     System.out.println();
   }
 
+  /**
+   * Prompts the user to enter the activity code in the format: abc-00 (3
+   * letters hyphen 2 digits). Validates the input and provides an option to
+   * confirm or change the entered activity code. The activity code must consist
+   * of 3 letters, a hyphen, and 2 digits.
+   *
+   * @param userInput A Scanner object to read user input.
+   */
   private void activityCode(Scanner userInput) {
-    /**
-     * Prompts the user to enter the activity code in the format: abc-00 (3
-     * letters hyphen 2 digits). Validates the input and provides an option to
-     * confirm or change the entered activity code. The activity code must
-     * consist of 3 letters, a hyphen, and 2 digits.
-     *
-     * @param userInput A Scanner object to read user input.
-     */
     boolean check = true;
     String checkHappy = "";
 
@@ -83,20 +81,20 @@ public class NewActivityInput {
     }
   }
 
+  /**
+   * Prompts the user to enter the base cost of the activity as a positive
+   * floating-point number through the provided Scanner object. The method
+   * validates the input to ensure it's a non-negative number. The user is given
+   * the option to confirm or change the entered base cost. If the user confirms
+   * the price by typing "yes", the provided base cost is accepted and stored.
+   * If the user types "no", they can re-enter the base cost. The method loops
+   * until the user enters a valid non-negative number and confirms the entered
+   * base cost.
+   *
+   * @param userInput A Scanner object to read user input.
+   * @throws InputMismatchException If the user enters a non-numeric value.
+   */
   private void activityPrice(Scanner userInput) {
-    /**
-     * Prompts the user to enter the base cost of the activity as a positive
-     * floating-point number through the provided Scanner object. The method
-     * validates the input to ensure it's a non-negative number. The user is
-     * given the option to confirm or change the entered base cost. If the user
-     * confirms the price by typing "yes", the provided base cost is accepted
-     * and stored. If the user types "no", they can re-enter the base cost. The
-     * method loops until the user enters a valid non-negative number and
-     * confirms the entered base cost.
-     *
-     * @param userInput A Scanner object to read user input.
-     * @throws InputMismatchException If the user enters a non-numeric value.
-     */
     boolean check = true;
     String checkHappy = "";
 
@@ -127,17 +125,17 @@ public class NewActivityInput {
     }
   }
 
+  /**
+   * Prompts the user to enter the location of the activity through the provided
+   * Scanner object. The method validates the input and allows the user to
+   * confirm or change the entered location. If the user confirms the location
+   * by typing "yes", the provided location is accepted and stored. If the user
+   * types "no", they can re-enter the location. The method loops until the user
+   * enters a valid location and confirms the entered value.
+   *
+   * @param userInput A Scanner object to read user input.
+   */
   private void activityLocation(Scanner userInput) {
-    /**
-     * Prompts the user to enter the location of the activity through the
-     * provided Scanner object. The method validates the input and allows the
-     * user to confirm or change the entered location. If the user confirms the
-     * location by typing "yes", the provided location is accepted and stored.
-     * If the user types "no", they can re-enter the location. The method loops
-     * until the user enters a valid location and confirms the entered value.
-     *
-     * @param userInput A Scanner object to read user input.
-     */
     boolean check = true;
     String checkHappy = "";
 
@@ -157,18 +155,18 @@ public class NewActivityInput {
     }
   }
 
+  /**
+   * Prompts the user to enter the expected duration of the activity in hours
+   * and minutes using the provided Scanner object. The method validates the
+   * input and allows the user to confirm or change the entered duration. If the
+   * user confirms the duration by typing "yes", the provided duration is
+   * converted to decimal hours and stored. If the user types "no", they can
+   * re-enter the duration. The method loops until the user enters a valid
+   * duration and confirms the entered value.
+   *
+   * @param userInput A Scanner object to read user input.
+   */
   private void activityDuration(Scanner userInput) {
-    /**
-     * Prompts the user to enter the expected duration of the activity in hours
-     * and minutes using the provided Scanner object. The method validates the
-     * input and allows the user to confirm or change the entered duration. If
-     * the user confirms the duration by typing "yes", the provided duration is
-     * converted to decimal hours and stored. If the user types "no", they can
-     * re-enter the duration. The method loops until the user enters a valid
-     * duration and confirms the entered value.
-     *
-     * @param userInput A Scanner object to read user input.
-     */
     boolean check = true;
     String checkHappy = "";
     int durationHours = 0;
@@ -218,92 +216,15 @@ public class NewActivityInput {
     }
   }
 
-  private void activityDays(Scanner userInput) {
-    /**
-     * Prompts the user to enter the days when the activity will take place.
-     * Allows entry as either the first 3 letters of the day or the full day
-     * name (e.g., "monday" or "mon" are acceptable). Multiple days can be
-     * entered, separated by commas. Validates the input and provides an option
-     * to confirm or change the entered days.
-     *
-     * @param userInput A Scanner object to read user input.
-     */
-    boolean check = true;
-    String checkHappy = "";
-
-    while (check) {
-      System.out.println("""
-                         Please enter the days the activity will take place. 
-                         Enter as either the first 3 lettersof the day or as the full day. 
-                         For expample: monday and mon is acceptable. 
-                         To enter multiple, separate them with commas. mon, tue etc
-                         """);
-      String dayString = userInput.nextLine().toLowerCase().trim();
-
-      // checking for valid dates
-      int indexDays = 0;
-      String[] daysArray = dayString.split(",");
-      for (String day : daysArray) {
-        day = day.trim().strip();
-        switch (day) {
-          case "mon", "tue", "wed", "thu", "fri", "sat", "sun" -> {
-          }
-          case "monday" -> {
-            daysArray[indexDays] = "mon";
-          }
-          case "tuesday" -> {
-            daysArray[indexDays] = "tue";
-          }
-          case "wednesday" -> {
-            daysArray[indexDays] = "wed";
-          }
-          case "thursday" -> {
-            daysArray[indexDays] = "thu";
-          }
-          case "friday" -> {
-            daysArray[indexDays] = "fri";
-          }
-          case "saturday" -> {
-            daysArray[indexDays] = "sat";
-          }
-          case "sunday" -> {
-            daysArray[indexDays] = "sun";
-          }
-          default -> {
-            System.out.println("Error with your input. Please enter dates coded as 3 letters seperated by commas");
-            checkHappy = "no";
-            break;
-          }
-        }
-        indexDays++;
-      }
-
-      String days = String.join(",", daysArray);
-      days = days.replaceAll("\\s", "");
-
-      if (checkHappy != "no") {
-        checkHappy = CheckHappy.checkHappy(userInput, days);
-      }
-
-      if (checkHappy.equals("yes")) {
-        check = false;
-        setDays(days);
-      } else {
-        dayString = "";
-        checkHappy = "";
-      }
-    }
-  }
-
+  /**
+   * Prompts the user to enter the time when the activity will take place in the
+   * format "HH:MM". Validates the input format and checks if the entered time
+   * falls within the valid time range (0-23 hours, 0-59 minutes). Provides an
+   * option to confirm or change the entered time.
+   *
+   * @param userInput A Scanner object to read user input.
+   */
   public void activityTime(Scanner userInput) {
-    /**
-     * Prompts the user to enter the time when the activity will take place in
-     * the format "HH:MM". Validates the input format and checks if the entered
-     * time falls within the valid time range (0-23 hours, 0-59 minutes).
-     * Provides an option to confirm or change the entered time.
-     *
-     * @param userInput A Scanner object to read user input.
-     */
     boolean check = true;
     String checkHappy = "";
     int hours = 0;
@@ -367,15 +288,15 @@ public class NewActivityInput {
     }
   }
 
+  /**
+   * Prompts the user to enter a short description of the activity. Validates
+   * the input and provides an option to confirm or change the entered
+   * description. This description is associated with the activity specified by
+   * getActivityName().
+   *
+   * @param userInput A Scanner object to read user input.
+   */
   private void activityDescription(Scanner userInput) {
-    /**
-     * Prompts the user to enter a short description of the activity. Validates
-     * the input and provides an option to confirm or change the entered
-     * description. This description is associated with the activity specified
-     * by getActivityName().
-     *
-     * @param userInput A Scanner object to read user input.
-     */
     boolean check = true;
     String checkHappy = "";
 
@@ -395,40 +316,39 @@ public class NewActivityInput {
     }
   }
 
+  /**
+   * Takes user input for various activity details including title, code,
+   * location, start time, duration, price, and description using the provided
+   * Scanner object.
+   *
+   * @param userInput A Scanner object to read user input.
+   * @return A formatted string containing the entered activity details.
+   */
   private String takeUserInput(Scanner userInput) {
-    /**
-     * Takes user input for various activity details including title, code,
-     * location, start time, duration, days, price, and description using the
-     * provided Scanner object.
-     *
-     * @param userInput A Scanner object to read user input.
-     * @return A formatted string containing the entered activity details.
-     */
     activityTitle(userInput);
     activityCode(userInput);
     activityLocation(userInput);
     activityTime(userInput);
     activityDuration(userInput);
-    activityDays(userInput);
     activityPrice(userInput);
     activityDescription(userInput);
 
     String output = String.format("activity: %s\tcode: %s\tlocation: %s\tstart: %s\tduration: %.2f\t"
-            + "days: %s\tprice: %.2f\tdescription: %s",
+            + "price: %.2f\tdescription: %s",
             getActivityName(), getActivityCode(), getLocation(), getStartTime(),
-            getExpectedDuration(), getDays(), getBaseCost(), getGeneralDescription()
+            getExpectedDuration(), getBaseCost(), getGeneralDescription()
     );
 
     return output;
   }
 
+  /**
+   * Prompts the user to decide whether they want to enter another activity.
+   *
+   * @param userInput A Scanner object to read user input.
+   * @return true if the user wants to add another activity, false otherwise.
+   */
   private boolean addAnother(Scanner userInput) {
-    /**
-     * Prompts the user to decide whether they want to enter another activity.
-     *
-     * @param userInput A Scanner object to read user input.
-     * @return true if the user wants to add another activity, false otherwise.
-     */
     String checkAgain = "";
 
     while (!checkAgain.equals("yes") && !checkAgain.equals("no")) {
@@ -443,7 +363,22 @@ public class NewActivityInput {
     return false;
   }
 
-  // TODO Doc String
+  /**
+   * Interactively collects information about an activity from the user and
+   * writes it to a file if confirmed. Initially, it gathers user input for an
+   * ongoing activity using the `takeUserInput` method. Then, it displays the
+   * details of the activity such as name, code, cost, location, start time,
+   * duration, and description. The user is then asked to confirm if they are
+   * happy with the details. If the user confirms, the information is written to
+   * a file using the provided `FileOperations` object. If the user is not happy
+   * with the details, they can start over by re-entering the information. The
+   * method supports adding multiple entries by recursively calling itself if
+   * the user wishes to add another activity.
+   *
+   * @param userInput Scanner object to read user input from the console.
+   * @param file FileOperations object to handle writing the collected
+   * information to a file.
+   */
   public void collectInformation(Scanner userInput, FileOperations file) {
     String running = takeUserInput(userInput);
 
@@ -453,7 +388,6 @@ public class NewActivityInput {
     System.out.println("Acitivty Code:\t" + getActivityCode());
     System.out.println("Activity price:\t" + getBaseCost());
     System.out.println("Activity location:\t" + getLocation());
-    System.out.println("Activity date:\t" + getDays());
     System.out.println("Activity start time:\t" + getStartTime());
     System.out.println("Activity duration:\t" + getExpectedDuration());
     System.out.println("Activity description:\t" + getGeneralDescription());
@@ -471,7 +405,6 @@ public class NewActivityInput {
       }
     } else {
       setBaseCost(-1.00f);
-      setDays("");
       setExpectedDuration(-1.00f);
       setLocation("");
       setStartTime("");
@@ -513,14 +446,6 @@ public class NewActivityInput {
 
   private void setLocation(String location) {
     this.location = location;
-  }
-
-  private String getDays() {
-    return days;
-  }
-
-  private void setDays(String days) {
-    this.days = days;
   }
 
   private String getStartTime() {
