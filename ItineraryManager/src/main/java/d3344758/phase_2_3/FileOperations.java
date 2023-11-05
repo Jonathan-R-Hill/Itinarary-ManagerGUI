@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,39 +19,62 @@ public class FileOperations {
   private boolean fileExists = false;
   private File storageFile;
 
+  /**
+   * Constructs a new {@code FileOperations} object. Initializes the file
+   * existence status, the file name, and the file itself.
+   *
+   * @param fileName The name of the file with which the operations will be
+   * performed.
+   * @param fileExists A boolean indicating if the file already exists.
+   */
   public FileOperations(String fileName, boolean fileExists) {
     this.fileExists = fileExists;
     this.fileName = fileName;
     this.storageFile = new File(fileName);
   }
 
-  public void readFile() {
-    /**
-     * Reads data from the specified file and prints its contents to the
-     * console. This method accesses the file, reads its data line by line, and
-     * outputs each line to the console. If an IOException occurs during the
-     * file reading process, the error details are printed to the standard error
-     * stream.
-     */
+  /**
+   * Reads the content of the file line by line, splitting each line into an
+   * array of strings based on tab characters. Further splits each item by the
+   * first colon encountered and trims the result. Each line's items are stored
+   * as a String array and all lines are collected into a list.
+   *
+   * @return A list of string arrays, each representing the split content of one
+   * line in the file.
+   */
+  public List<String[]> readFile() {
+    List<String[]> fileContents = new ArrayList<>();
+    
     try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
       String line;
+
       while ((line = reader.readLine()) != null) {
-        System.out.println(line);
+        String[] items = line.split("\t");
+
+        for (int i = 0; i < items.length; i++) {
+          String[] parts = items[i].split(":", 2);
+
+          if (parts.length > 1) {
+            items[i] = parts[1].trim().strip();
+          }
+        }
+        fileContents.add(items);
       }
     } catch (IOException error) {
       error.printStackTrace();
     }
+    return fileContents;
   }
 
+  /**
+   * Writes the provided information to the file. The information is appended to
+   * the end of the file. After writing, a success message is printed to the
+   * console. If an IOException occurs, it is caught and its stack trace is
+   * printed.
+   *
+   * @param information The data to be written to the file, as a single string.
+   */
   public void writeToFile(String information) {
-    /**
-     * This method is used to write data to the file, typically for each
-     * activity as entered via the console GUI. The data is expected to be
-     * provided as the 'information' parameter. If the write operation is
-     * successful, it will print a success message to the console.
-     *
-     * @param information The data to be written to the file.
-     */
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
       writer.append(information + "\n");
       System.out.println("Write operation was successful!");
@@ -58,12 +83,12 @@ public class FileOperations {
     }
   }
 
+  /**
+   * Checks if the file specified by the 'fileName' exists and, if not, attempts
+   * to create it. Provides console output indicating whether the file exists,
+   * was created, or if the creation failed.
+   */
   public void checkCreateFile() {
-    /**
-     * This method checks whether the file exists. If the file does not exist,
-     * it tries to create the file. It provides console feedback about the
-     * file's existence and creation status.
-     */
     if (!getFileExists()) {
       if (storageFile.exists()) {
         System.out.println("File exists!");

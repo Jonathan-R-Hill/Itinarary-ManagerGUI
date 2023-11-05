@@ -1,5 +1,6 @@
 package d3344758.phase_2_3;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -15,6 +16,27 @@ public class ItineraryInput {
   private String[] activityCodes;
   private String[] activities;
   private int totalActivities;
+  private String[] exsistingActivities;
+  private List<String[]> information;
+
+  // TODO method
+  public void populateExistingData() {
+    FileOperations readActivities = new FileOperations("activities.txt", true);
+    readActivities.checkCreateFile();
+    setInformation(readActivities.readFile());
+    setExsistingActivities(new String[getInformation().size()]);
+    
+    int counter = 0;  // for adding the items to the array
+    for (String[] items : getInformation()) {
+      // adding just the activity name to a separate array
+      getExsistingActivities()[counter] = items[0];
+      counter++;
+    }
+
+    for (String item : getExsistingActivities()) {
+      System.out.println(item);
+    }
+  }
 
   // TODO method
   private void inputClientName(Scanner userInput) {
@@ -43,6 +65,15 @@ public class ItineraryInput {
 
   // TODO method
   private void fetchActivityCodes() {
+
+  }
+
+  // TODO method
+  public void gatherInformation() {
+
+  }
+
+  public void generateReciept() {
 
   }
 
@@ -93,6 +124,22 @@ public class ItineraryInput {
 
   public void setTotalActivities(int totalActivities) {
     this.totalActivities = totalActivities;
+  }
+
+  public String[] getExsistingActivities() {
+    return exsistingActivities;
+  }
+
+  public void setExsistingActivities(String[] exsistingActivities) {
+    this.exsistingActivities = exsistingActivities;
+  }
+
+  public List<String[]> getInformation() {
+    return information;
+  }
+
+  public void setInformation(List<String[]> information) {
+    this.information = information;
   }
 
 }

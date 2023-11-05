@@ -6,7 +6,7 @@ import java.util.Scanner;
  *
  * @author jonny
  */
-public class CheckHappy {
+public class ValidationChecks {
 
   public static String checkHappy(Scanner userInput, String param) {
     String checkHappy = "";
@@ -43,6 +43,19 @@ public class CheckHappy {
       checkHappy = userInput.nextLine().toLowerCase();
     }
     return checkHappy;
+  }
+
+  public boolean addAnother(Scanner userInput, String param) {
+    String check = "";
+    while (!check.equals("yes") && !check.equals("yes")) {
+      System.out.printf("Would you like to make another %s entry?\tyes or no", param);
+      check = userInput.nextLine().toLowerCase().trim().strip();
+    }
+    
+    if (check.equals("yes")) {
+      return true;
+    }
+    return false;
   }
 
 }
