@@ -72,7 +72,8 @@ public class ItineraryInput {
   public void gatherInformation() {
 
   }
-
+  
+  // TODO method
   public void generateReciept() {
 
   }

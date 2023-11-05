@@ -44,7 +44,7 @@ public class FileOperations {
    */
   public List<String[]> readFile() {
     List<String[]> fileContents = new ArrayList<>();
-    
+
     try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
       String line;
 
@@ -119,14 +119,6 @@ public class FileOperations {
 
   private void setFileExists(boolean trueFalse) {
     this.fileExists = trueFalse;
-  }
-
-  private String getFileName() {
-    return this.fileName;
-  }
-
-  private void setFileName(String newName) {
-    this.fileName = newName;
   }
 
 }
