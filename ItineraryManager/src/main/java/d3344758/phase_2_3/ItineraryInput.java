@@ -1,5 +1,7 @@
 package d3344758.phase_2_3;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,17 +19,17 @@ public class ItineraryInput {
   private String[] activities;
   private int totalActivities;
   private String[] exsistingActivities;
-  private List<String[]> information;
+  private List<String[]> activityInformation;
 
-  // TODO method
+  // TODO test and fix method
   public void populateExistingData() {
     FileOperations readActivities = new FileOperations("activities.txt", true);
     readActivities.checkCreateFile();
-    setInformation(readActivities.readFile());
-    setExsistingActivities(new String[getInformation().size()]);
-    
+    setActivityInformation(readActivities.readFile());
+    setExsistingActivities(new String[getActivityInformation().size()]);
+
     int counter = 0;  // for adding the items to the array
-    for (String[] items : getInformation()) {
+    for (String[] items : getActivityInformation()) {
       // adding just the activity name to a separate array
       getExsistingActivities()[counter] = items[0];
       counter++;
@@ -38,14 +40,38 @@ public class ItineraryInput {
     }
   }
 
-  // TODO method
+  // TODO Doc String & test
   private void inputClientName(Scanner userInput) {
+    boolean check = true;
+    String checkHappy = "";
 
+    while (check) {
+      System.out.println("""
+                       Please enter the name of the client.  Enter as: First Initial space last name.
+                       Please use a maximum of 20 characters.""");
+      String name = userInput.nextLine();
+
+      if (name.length() <= 20 && name.charAt(1) == ' ') {
+        checkHappy = ValidationChecks.checkHappy(userInput, name);
+      } else if (name.length() > 20) {
+        System.out.println("Please ensure the name is less than 20 characters long. If it is more"
+                + "Please shorten the last name.");
+      } else {
+
+      }
+
+      if (checkHappy.equals("yes")) {
+        check = false;
+        setClientName(name);
+      }
+    }
   }
 
   // TODO method
   private void inputDate(Scanner userInput) {
-
+    LocalDate today = LocalDate.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+    String formattedDate = today.format(formatter);
   }
 
   // TODO method
@@ -72,7 +98,7 @@ public class ItineraryInput {
   public void gatherInformation() {
 
   }
-  
+
   // TODO method
   public void generateReciept() {
 
@@ -135,12 +161,12 @@ public class ItineraryInput {
     this.exsistingActivities = exsistingActivities;
   }
 
-  public List<String[]> getInformation() {
-    return information;
+  public List<String[]> getActivityInformation() {
+    return activityInformation;
   }
 
-  public void setInformation(List<String[]> information) {
-    this.information = information;
+  public void setActivityInformation(List<String[]> activityInformation) {
+    this.activityInformation = activityInformation;
   }
 
 }
