@@ -2,6 +2,8 @@ package d3344758.phase_2_3;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -40,24 +42,22 @@ public class ItineraryInput {
     }
   }
 
-  // TODO Doc String & test
+  // TODO Doc String maybe Title case?
   private void inputClientName(Scanner userInput) {
     boolean check = true;
     String checkHappy = "";
 
     while (check) {
       System.out.println("""
-                       Please enter the name of the client.  Enter as: First Initial space last name.
-                       Please use a maximum of 20 characters.""");
+                       Please enter the name of the client.  Enter as: First Initial space last name (ex: J Hill).
+                       Please use a maximum of 20 characters .""");
       String name = userInput.nextLine();
 
       if (name.length() <= 20 && name.charAt(1) == ' ') {
         checkHappy = ValidationChecks.checkHappy(userInput, name);
       } else if (name.length() > 20) {
         System.out.println("Please ensure the name is less than 20 characters long. If it is more"
-                + "Please shorten the last name.");
-      } else {
-
+                + " Please shorten the last name.");
       }
 
       if (checkHappy.equals("yes")) {
@@ -67,16 +67,70 @@ public class ItineraryInput {
     }
   }
 
-  // TODO method
+  // TODO JavaDoc maybe padding?
   private void inputDate(Scanner userInput) {
+    boolean check = true;
+
     LocalDate today = LocalDate.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     String formattedDate = today.format(formatter);
+
+    while (check) {
+      String checkHappy = "";
+
+      System.out.println("Please enter the date the activities are being booked for. "
+              + "Enter in the format: DD-MM-YYYY. for Example todays date is: " + formattedDate);
+      String userDateInput = userInput.nextLine().trim();
+
+      try {
+        LocalDate userDate = LocalDate.parse(userDateInput, formatter);
+
+        if (userDate.isBefore(today)) {
+          System.out.println("The date entered is in the past. Please enter a future date.");
+        } else {
+          checkHappy = ValidationChecks.checkHappy(userInput, userDateInput);
+
+          if (checkHappy.equals("yes")) {
+            System.out.println("The date is set for: " + userDate.format(formatter));
+            check = false;
+            setDate(userDateInput);
+          }
+        }
+      } catch (DateTimeParseException e) {
+        System.out.println("Please ensure you enter the date in the correct format: DD-MM-YYYY");
+      }
+    }
   }
 
-  // TODO method
+  // TODO JavaDoc
   private void inputTotalPeople(Scanner userInput) {
+    boolean check = true;
+    int numberOfPeople = 0;
 
+    while (check) {
+      String checkHappy = "";
+      try {
+        System.out.println("Please enter the amount of people in your party.");
+        numberOfPeople = userInput.nextInt();
+        userInput.nextLine();
+
+        if (numberOfPeople >= 1) {
+          checkHappy = ValidationChecks.checkHappy(userInput, numberOfPeople);
+        } else {
+          System.out.println("Please ensure you are entering a number equal to or greater than 1");
+        }
+
+        if (checkHappy.equals("yes")) {
+          check = false;
+          setTotalPeople(numberOfPeople);
+          System.out.println("The total people is set as: " + numberOfPeople);
+        }
+      } catch (InputMismatchException error) {
+        System.out.println("Please enter as a number. EG: 5");
+        numberOfPeople = 0;
+        userInput.nextLine();
+      }
+    }
   }
 
   // TODO method
