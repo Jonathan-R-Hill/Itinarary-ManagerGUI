@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author jonny
+ * @author Jonathan Hill (d3344758)
  */
 public class ValidationChecks {
 
@@ -45,13 +45,13 @@ public class ValidationChecks {
     return checkHappy;
   }
 
-  public boolean addAnother(Scanner userInput, String param) {
+  public static boolean addAnother(Scanner userInput, String param) {
     String check = "";
     while (!check.equals("yes") && !check.equals("yes")) {
       System.out.printf("Would you like to make another %s entry?\tyes or no", param);
       check = userInput.nextLine().toLowerCase().trim().strip();
     }
-    
+
     if (check.equals("yes")) {
       return true;
     }

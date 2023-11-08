@@ -338,7 +338,6 @@ public class NewActivityInput {
             getActivityName(), getActivityCode(), getLocation(), getStartTime(),
             getExpectedDuration(), getBaseCost(), getGeneralDescription()
     );
-
     return output;
   }
 

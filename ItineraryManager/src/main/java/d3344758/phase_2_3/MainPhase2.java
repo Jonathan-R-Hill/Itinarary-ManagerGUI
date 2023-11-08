@@ -23,6 +23,7 @@ public class MainPhase2 {
       FileOperations addItineryToFile = new FileOperations("itineraries.txt", false);
       addItineryToFile.checkCreateFile();
       customerInput.populateExistingData();
+      customerInput.inputActivities(userInput);
       // TODO call method from newItinarary to gather data
     } else {
       NewActivityInput addActivity = new NewActivityInput();

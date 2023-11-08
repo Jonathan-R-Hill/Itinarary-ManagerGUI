@@ -3,9 +3,11 @@ package d3344758.phase_2_3;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  *
@@ -17,8 +19,8 @@ public class ItineraryInput {
   private String date;
   private int totalPeople;
   private String referenceNumber;
-  private String[] activityCodes;
-  private String[] activities;
+  private List<String> activityCodes = new ArrayList<>();
+  private List<String> activities = new ArrayList<>();
   private int totalActivities;
   private String[] exsistingActivities;
   private List<String[]> activityInformation;
@@ -133,14 +135,57 @@ public class ItineraryInput {
     }
   }
 
-  // TODO method
-  private void clientRefernece(Scanner userInput) {
+  // TODO JavaDoc
+  private void clientRefernece() {
+    String startLetters = RandomStringUtils.randomAlphabetic(2).toUpperCase();
+    String numbers = RandomStringUtils.randomNumeric(3);
+    String finalLetter = RandomStringUtils.randomAlphabetic(1).toUpperCase();
 
+    String reference = startLetters + numbers + finalLetter;
+    setReferenceNumber(reference);
   }
 
   // TODO method
-  private void inputActivities(Scanner userInput) {
+  public void inputActivities(Scanner userInput) {
+    boolean check = true;
+    int totalActivities = getExsistingActivities().length;
+    String checkHappy = "";
 
+    while (check) {
+      for (int i = 0; i < totalActivities; i++) {
+        System.out.print("Activity number " + i + ":  " + getExsistingActivities()[i] + "\t");
+        if (i % 3 == 0 && i != 0) {
+          System.out.println("");
+        }
+      }
+
+      try {
+        System.out.println("Please enter the activity you would like to add. Pick a number from the list provided.");
+        int userChoice = userInput.nextInt();
+        userInput.nextLine();
+        if (userChoice <= totalActivities && userChoice >= 0) {
+          String userActivity = getExsistingActivities()[userChoice];
+
+          checkHappy = ValidationChecks.checkHappy(userInput, userActivity);
+        } else {
+          System.out.println("Please pick a number from the activities provided.");
+        }
+
+        if (checkHappy.equals("yes")) {
+          // TODO append to arrayList and change to ArrayList
+          activities.add(getExsistingActivities()[userChoice]);
+          String[] activityInfo = getActivityInformation().get(userChoice);
+          String code = activityInfo[1];
+          
+          check = ValidationChecks.addAnother(userInput, "Activity");
+          
+        }
+      } catch (InputMismatchException error) {
+        System.out.println("Please enter a number that has been displayed.");
+        userInput.nextLine();
+      }
+
+    }
   }
 
   // TODO method
@@ -191,11 +236,11 @@ public class ItineraryInput {
     this.referenceNumber = referenceNumber;
   }
 
-  public String[] getActivityCodes() {
+  public List<String> getActivityCodes() {
     return activityCodes;
   }
 
-  public void setActivityCodes(String[] activityCodes) {
+  public void setActivityCodes(List<String> activityCodes) {
     this.activityCodes = activityCodes;
   }
 
