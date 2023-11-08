@@ -14,7 +14,7 @@ public class MainPhase2 {
   private static void userChoice(Scanner userInput) {
 
     while (!staffChoice.equals("custom") && !staffChoice.equals("admin")) {
-      System.out.println("To add a new activity, enter: admin. To add a customers itinarary enter custom");
+      System.out.println("To add a new activity, enter: admin. To add a customers itinarary enter: custom");
       staffChoice = userInput.nextLine();
     }
 
@@ -23,7 +23,6 @@ public class MainPhase2 {
       FileOperations addItineryToFile = new FileOperations("itineraries.txt", false);
       addItineryToFile.checkCreateFile();
       customerInput.populateExistingData();
-      customerInput.inputActivities(userInput);
       // TODO call method from newItinarary to gather data
     } else {
       NewActivityInput addActivity = new NewActivityInput();

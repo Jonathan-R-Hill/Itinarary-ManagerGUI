@@ -25,7 +25,7 @@ public class ItineraryInput {
   private String[] exsistingActivities;
   private List<String[]> activityInformation;
 
-  // TODO test and fix method
+  // TODO JavaDoc
   public void populateExistingData() {
     FileOperations readActivities = new FileOperations("activities.txt", true);
     readActivities.checkCreateFile();
@@ -37,10 +37,6 @@ public class ItineraryInput {
       // adding just the activity name to a separate array
       getExsistingActivities()[counter] = items[0];
       counter++;
-    }
-
-    for (String item : getExsistingActivities()) {
-      System.out.println(item);
     }
   }
 
@@ -145,8 +141,8 @@ public class ItineraryInput {
     setReferenceNumber(reference);
   }
 
-  // TODO method
-  public void inputActivities(Scanner userInput) {
+  // TODO JavaDoc
+  private void inputActivities(Scanner userInput) {
     boolean check = true;
     int totalActivities = getExsistingActivities().length;
     String checkHappy = "";
@@ -160,9 +156,11 @@ public class ItineraryInput {
       }
 
       try {
-        System.out.println("Please enter the activity you would like to add. Pick a number from the list provided.");
+        System.out.println("Please enter the activity you would like to add. "
+                + "Pick a number from the list provided.");
         int userChoice = userInput.nextInt();
         userInput.nextLine();
+
         if (userChoice <= totalActivities && userChoice >= 0) {
           String userActivity = getExsistingActivities()[userChoice];
 
@@ -172,25 +170,19 @@ public class ItineraryInput {
         }
 
         if (checkHappy.equals("yes")) {
-          // TODO append to arrayList and change to ArrayList
-          activities.add(getExsistingActivities()[userChoice]);
           String[] activityInfo = getActivityInformation().get(userChoice);
           String code = activityInfo[1];
-          
+          activities.add(getExsistingActivities()[userChoice]);
+          activityCodes.add(code);
+
           check = ValidationChecks.addAnother(userInput, "Activity");
-          
+
         }
       } catch (InputMismatchException error) {
         System.out.println("Please enter a number that has been displayed.");
         userInput.nextLine();
       }
-
     }
-  }
-
-  // TODO method
-  private void fetchActivityCodes() {
-
   }
 
   // TODO method
@@ -201,6 +193,9 @@ public class ItineraryInput {
   // TODO method
   public void generateReciept() {
 
+    System.out.println("+------------------------------+");
+    System.out.printf("| %-30s%-5s |\n", "PH", "PH");
+    System.out.println("+------------------------------+");
   }
 
   // ---------- Getters/Setters below ---------- //

@@ -47,8 +47,8 @@ public class ValidationChecks {
 
   public static boolean addAnother(Scanner userInput, String param) {
     String check = "";
-    while (!check.equals("yes") && !check.equals("yes")) {
-      System.out.printf("Would you like to make another %s entry?\tyes or no", param);
+    while (!check.equals("yes") && !check.equals("no")) {
+      System.out.printf("Would you like to make another %s entry?\tyes or no\n", param);
       check = userInput.nextLine().toLowerCase().trim().strip();
     }
 
