@@ -29,12 +29,17 @@ public class NewActivityInput {
    */
   private void activityTitle(Scanner userInput) {
     boolean check = true;
-
+    String checkHappy = "";
+    
     while (check) {
       System.out.println("Please enter the name of your activity");
       String activityname = userInput.nextLine();
 
-      String checkHappy = ValidationChecks.checkHappy(userInput, activityname);
+      if (activityname != "") {
+        checkHappy = ValidationChecks.checkHappy(userInput, activityname);
+      } else {
+        System.out.println("Please ensure you enter a name for the activity.");
+      }
 
       if (checkHappy.equals("yes")) {
         check = false;
@@ -248,13 +253,7 @@ public class NewActivityInput {
             checkHappy = "no";
             System.out.println("Please ensure your hours range is between 0 - 23 and minutes is between 0 - 59");
           }
-        } catch (NumberFormatException e) {
-          System.out.println(e);
-          System.out.println("Please re-enter your time");
-          checkHappy = "no";
-          hours = -1;
-          minutes = -1;
-        } catch (InputMismatchException e) {
+        } catch (NumberFormatException | InputMismatchException e) {
           System.out.println(e);
           System.out.println("Please re-enter your time");
           checkHappy = "no";
@@ -298,20 +297,16 @@ public class NewActivityInput {
    */
   private void activityDescription(Scanner userInput) {
     boolean check = true;
-    String checkHappy = "";
 
     while (check) {
       System.out.println("Please enter a short description of the activity " + getActivityName() + ": ");
       String description = userInput.nextLine();
 
-      checkHappy = ValidationChecks.checkHappy(userInput, description);
+      String checkHappy = ValidationChecks.checkHappy(userInput, description);
 
       if (checkHappy.equals("yes")) {
         check = false;
         setGeneralDescription(description);
-      } else {
-        description = "";
-        checkHappy = "";
       }
     }
   }
@@ -399,6 +394,7 @@ public class NewActivityInput {
     if (checkHappy.equals("yes")) {
       file.writeToFile(running);
       boolean again = addAnother(userInput);
+      
       if (again) {
         collectInformation(userInput, file);
       }

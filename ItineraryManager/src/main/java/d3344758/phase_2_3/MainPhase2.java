@@ -23,7 +23,7 @@ public class MainPhase2 {
       FileOperations addItineryToFile = new FileOperations("itineraries.txt", false);
       addItineryToFile.checkCreateFile();
       customerInput.populateExistingData();
-      // TODO call method from newItinarary to gather data
+      customerInput.gatherInformation(userInput);
     } else {
       NewActivityInput addActivity = new NewActivityInput();
       FileOperations addActivityToFile = new FileOperations("activities.txt", false);
@@ -33,7 +33,8 @@ public class MainPhase2 {
   }
 
   public static void main(String[] args) {
-    System.out.println("Welcome to the Itinarary manager console.");
+    System.out.println("Welcome to the Itinarary manager console. "
+            + "You can chose to create a new activity or create a customers itninerary here");
     userChoice(userInput);
   }
 }
