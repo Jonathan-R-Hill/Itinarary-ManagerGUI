@@ -18,12 +18,11 @@ public class NewActivityInput {
   private String generalDescription;
 
   /**
-   * Prompts the user to enter the name of their activity through the provided
-   * Scanner object. The user is given the option to confirm or change the
-   * entered activity name. If the user confirms the name by typing "yes", the
-   * provided activity name is accepted and stored. If the user types "no", they
-   * can re-enter the activity name. The method loops until the user confirms
-   * the entered activity name.
+   * Prompts the user to enter the name of their activity. 
+   * The user is given the option to confirm or change the
+   * entered activity name. If the user confirms the name the
+   * provided activity name is accepted and stored. If the user rejects, they
+   * can re-enter the activity name. Loops until the user confirms their selection
    *
    * @param userInput A Scanner object to read user input.
    */
@@ -52,9 +51,9 @@ public class NewActivityInput {
   }
 
   /**
-   * Prompts the user to enter the activity code in the format: abc-00 (3
-   * letters hyphen 2 digits). Validates the input and provides an option to
-   * confirm or change the entered activity code. The activity code must consist
+   * Prompts the user to enter the activity code in the format: abc-00. 
+   * ensures the input  is valid and provides an option to
+   * confirm or change the entered code. The activity code must consist
    * of 3 letters, a hyphen, and 2 digits.
    *
    * @param userInput A Scanner object to read user input.
@@ -88,13 +87,11 @@ public class NewActivityInput {
 
   /**
    * Prompts the user to enter the base cost of the activity as a positive
-   * floating-point number through the provided Scanner object. The method
-   * validates the input to ensure it's a non-negative number. The user is given
-   * the option to confirm or change the entered base cost. If the user confirms
-   * the price by typing "yes", the provided base cost is accepted and stored.
-   * If the user types "no", they can re-enter the base cost. The method loops
-   * until the user enters a valid non-negative number and confirms the entered
-   * base cost.
+   * floating-point number. validates the input to ensure it's a non-negative number.
+   * The user is given the option to confirm or change the entered base cost. 
+   * If the user confirms the price, the provided base cost is accepted and stored.
+   * If the user rejects the price, they can re-enter the base cost. 
+   * Loops until the user enters a valid number and confirms their entry.
    *
    * @param userInput A Scanner object to read user input.
    * @throws InputMismatchException If the user enters a non-numeric value.
@@ -131,12 +128,11 @@ public class NewActivityInput {
   }
 
   /**
-   * Prompts the user to enter the location of the activity through the provided
-   * Scanner object. The method validates the input and allows the user to
-   * confirm or change the entered location. If the user confirms the location
-   * by typing "yes", the provided location is accepted and stored. If the user
-   * types "no", they can re-enter the location. The method loops until the user
-   * enters a valid location and confirms the entered value.
+   * Prompts the user to enter the location of the activity.
+   * Validates the input and allows the user to confirm or change the entered location. 
+   * If the user confirms the location, the provided location is accepted and stored. If the user
+   * rejects the provided location, they can re-enter the location. 
+   * Loops until the user confirms the entered value.
    *
    * @param userInput A Scanner object to read user input.
    */
@@ -162,11 +158,10 @@ public class NewActivityInput {
 
   /**
    * Prompts the user to enter the expected duration of the activity in hours
-   * and minutes using the provided Scanner object. The method validates the
-   * input and allows the user to confirm or change the entered duration. If the
-   * user confirms the duration by typing "yes", the provided duration is
-   * converted to decimal hours and stored. If the user types "no", they can
-   * re-enter the duration. The method loops until the user enters a valid
+   * and minutes. Validates the input and allows the user to confirm or change the entered duration. 
+   * If the user confirms the duration, the provided duration is
+   * converted to decimal hours and stored. If the user rejects, they can
+   * re-enter the duration. Loops until the user enters a valid
    * duration and confirms the entered value.
    *
    * @param userInput A Scanner object to read user input.
@@ -288,10 +283,9 @@ public class NewActivityInput {
   }
 
   /**
-   * Prompts the user to enter a short description of the activity. Validates
-   * the input and provides an option to confirm or change the entered
-   * description. This description is associated with the activity specified by
-   * getActivityName().
+   * Prompts the user to enter a short description of the activity. 
+   * provides an option for the user to confirm or change the entered
+   * description.
    *
    * @param userInput A Scanner object to read user input.
    */
@@ -313,8 +307,8 @@ public class NewActivityInput {
 
   /**
    * Takes user input for various activity details including title, code,
-   * location, start time, duration, price, and description using the provided
-   * Scanner object.
+   * location, start time, duration, price, and description by calling the methods
+   * list within the method.
    *
    * @param userInput A Scanner object to read user input.
    * @return A formatted string containing the entered activity details.
@@ -361,13 +355,12 @@ public class NewActivityInput {
    * Interactively collects information about an activity from the user and
    * writes it to a file if confirmed. Initially, it gathers user input for an
    * ongoing activity using the `takeUserInput` method. Then, it displays the
-   * details of the activity such as name, code, cost, location, start time,
-   * duration, and description. The user is then asked to confirm if they are
+   * details of the activity. The user is then asked to confirm if they are
    * happy with the details. If the user confirms, the information is written to
    * a file using the provided `FileOperations` object. If the user is not happy
-   * with the details, they can start over by re-entering the information. The
-   * method supports adding multiple entries by recursively calling itself if
-   * the user wishes to add another activity.
+   * with the details, they can start over by re-entering the information. 
+   * Once a decision has been made the user is asked if they want to add another entry
+   * and will loop based on their choice. 
    *
    * @param userInput Scanner object to read user input from the console.
    * @param file FileOperations object to handle writing the collected

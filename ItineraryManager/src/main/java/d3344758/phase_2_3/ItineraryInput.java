@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -157,7 +158,98 @@ public class ItineraryInput {
     setReferenceNumber(reference);
   }
 
-  // TODO JavaDoc  Duplcation Checking?
+  // TODO method currently working on this one
+  private String addonRequired(Scanner userInput, String activityCode) {
+    boolean check = true;
+    String code = activityCode;
+    ArrayList<String> addonsAdded = new ArrayList<>();
+    int addonCounter = addonsAdded.size();
+
+    try {
+      String[] splitCode = code.split(":");
+      String[] addonsSplit = splitCode[1].split(",");
+
+      if (splitCode.length != 1) {
+        addonsAdded.addAll(Arrays.asList(addonsSplit));
+      }
+    } catch (ArrayIndexOutOfBoundsException e) {
+      System.out.println("Error within addonRequired array splitting\nMoving on");
+    }
+
+    System.out.println("All activity addons are provided by\n------> Exciting Activities Ltd <------");
+    while (check) {
+      String checkHappy = "";
+      System.out.println("""
+                       Please choose the addons you would like if any. 
+                       For Insurance. Enter: INS  (costs £20.00)
+                       For Travel. Enter: TRN (costs £2.00)
+                       For Photography. Enter: PHO  (costs £10.00)
+                       If none are required. Enter: none""");
+      String userChoice = userInput.nextLine().toUpperCase();
+
+      boolean isValid = true;
+      for (String addon : addonsAdded) {
+        if (userChoice.equals(addon)) {
+          isValid = false;
+          break;
+        }
+      }
+
+      if (isValid) {
+        switch (userChoice) {
+          case "TRN" -> {
+            checkHappy = ValidationChecks.checkHappy(userInput, "Travel (TVN)");
+            if (checkHappy.equals("yes")) {
+              if (addonCounter == 0) {
+                code += ":";
+              }
+              code += "TRN,";
+              addonCounter += 1;
+              addonsAdded.add("TRN,");
+              check = ValidationChecks.addAnother(userInput, "addon");
+            }
+          }
+          case "INS" -> {
+            checkHappy = ValidationChecks.checkHappy(userInput, "Insurance (INS)");
+            if (checkHappy.equals("yes")) {
+              if (addonCounter == 0) {
+                code += ":";
+              }
+              code += "INS,";
+              addonCounter += 1;
+              addonsAdded.add("INS,");
+              check = ValidationChecks.addAnother(userInput, "addon");
+            }
+          }
+          case "PHO" -> {
+            checkHappy = ValidationChecks.checkHappy(userInput, "Photography (PHO)");
+            if (checkHappy.equals("yes")) {
+              if (addonCounter == 0) {
+                code += ":";
+              }
+              code += "PHO,";
+              addonCounter += 1;
+              addonsAdded.add("PHO,");
+              check = ValidationChecks.addAnother(userInput, "addon");
+            }
+          }
+          case "NONE" -> {
+            check = false;
+          }
+          default -> {
+            System.out.println("Please ensure you enter one of the codes OR none");
+          }
+
+        }
+      } else {
+        System.out.println("That has already been addon to the Activity.");
+      }
+
+    }
+    return code;
+  }
+
+  // TODO JavaDoc  Duplcation Checking? 
   private void inputActivities(Scanner userInput) {
     boolean check = true;
     int totalActivities = getExsistingActivities().length;
@@ -189,16 +281,44 @@ public class ItineraryInput {
           String[] activityInfo = getActivityInformation().get(userChoice);
           String code = activityInfo[1];
           activities.add(getExsistingActivities()[userChoice]);
+
+          code = addonRequired(userInput, code);
           activityCodes.add(code);
 
           check = ValidationChecks.addAnother(userInput, "Activity");
-
         }
       } catch (InputMismatchException error) {
         System.out.println("Please enter a number that has been displayed.");
         userInput.nextLine();
       }
     }
+  }
+
+  // TODO method
+  private void itineraryAddons(Scanner userInput) {
+    boolean check = true;
+
+    while (check) {
+      String checkHappy = "";
+
+      System.out.println("""
+                         Would you like any Itinerary addons? The options we have are:
+                         Lunch (costs £4.00)
+                         Hotel Room for 1 night (cost £75.00)""");
+    }
+  }
+
+  // TODO method
+  private void calculateCosts() {
+
+  }
+
+  // TODO method
+  private void generateReciept() {
+
+    System.out.println("+------------------------------+");
+    System.out.printf("| %-20s%-5s |\n", "PH", "PH");
+    System.out.println("+------------------------------+");
   }
 
   // TODO finish method test write to file 
@@ -210,14 +330,6 @@ public class ItineraryInput {
     clientRefernece();
 
     generateReciept();
-  }
-
-  // TODO method
-  private void generateReciept() {
-
-    System.out.println("+------------------------------+");
-    System.out.printf("| %-20s%-5s |\n", "PH", "PH");
-    System.out.println("+------------------------------+");
   }
 
   // ---------- Getters/Setters below ---------- //
