@@ -25,6 +25,7 @@ public class ItineraryInput {
   private List<String> activities = new ArrayList<>();
   private int totalActivities;
   private String[] exsistingActivities;
+  private List<String> itineraryAddons = new ArrayList<>();
   private List<String[]> activityInformation;
 
   // TODO JavaDoc
@@ -42,7 +43,7 @@ public class ItineraryInput {
     }
   }
 
-  // TODO Doc String   --I really hate regex
+  // TODO JavaDoc   --I really hate regex
   private void inputClientName(Scanner userInput) {
     boolean check = true;
     String checkHappy = "";
@@ -179,6 +180,8 @@ public class ItineraryInput {
     System.out.println("All activity addons are provided by\n------> Exciting Activities Ltd <------");
     while (check) {
       String checkHappy = "";
+      boolean isValid = true;
+      
       System.out.println("""
                        Please choose the addons you would like if any. 
                        For Insurance. Enter: INS  (costs £20.00)
@@ -186,8 +189,7 @@ public class ItineraryInput {
                        For Photography. Enter: PHO  (costs £10.00)
                        If none are required. Enter: none""");
       String userChoice = userInput.nextLine().toUpperCase();
-
-      boolean isValid = true;
+      
       for (String addon : addonsAdded) {
         if (userChoice.equals(addon)) {
           isValid = false;
@@ -259,7 +261,7 @@ public class ItineraryInput {
       for (int i = 0; i < totalActivities; i++) {
         System.out.print("Activity number " + i + ":  " + getExsistingActivities()[i] + "\t");
         if (i % 3 == 0 && i != 0) {
-          System.out.println("");
+          System.out.println(""); // To make it easier for the user to read the activities
         }
       }
 
@@ -294,18 +296,58 @@ public class ItineraryInput {
     }
   }
 
-  // TODO method
+  // TODO JavaDoc
   private void itineraryAddons(Scanner userInput) {
     boolean check = true;
 
     while (check) {
+      boolean isValid = true;
       String checkHappy = "";
 
       System.out.println("""
                          Would you like any Itinerary addons? The options we have are:
-                         Lunch (costs £4.00)
-                         Hotel Room for 1 night (cost £75.00)""");
+                         Lunch (costs £4.00) Enter: lunch
+                         Hotel Room for 1 night (cost £75.00) Enter: room
+                         If you do not require any. Enter: none""");
+
+      String userChoice = userInput.nextLine().toLowerCase();
+
+      if (!itineraryAddons.isEmpty()) {
+        for (String addon : itineraryAddons) {
+          if (userChoice.equals(addon)) {
+            isValid = false;
+            System.out.println("This has already been added. Please chose a different option.");
+            break;
+          }
+        }
+      }
+
+      if (isValid) {
+        switch (userChoice) {
+          case "lunch" -> {
+            checkHappy = ValidationChecks.checkHappy(userInput, userChoice);
+
+            if (checkHappy.equals("yes")) {
+              itineraryAddons.add("lunch");
+            }
+          }
+          case "room" -> {
+            checkHappy = ValidationChecks.checkHappy(userInput, userChoice);
+
+            if (checkHappy.equals("yes")) {
+              itineraryAddons.add("Hotel Room");
+            }
+          }
+          case "none" -> {
+            check = false;
+            }
+          default -> {
+            System.out.println("Please ensure you are inputting a valid entry from the list provided.");
+          }
+        }
+      }
     }
+
   }
 
   // TODO method
