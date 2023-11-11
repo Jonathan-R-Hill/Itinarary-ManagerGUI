@@ -20,11 +20,10 @@ public class FileOperations {
   private File storageFile;
 
   /**
-   * Constructs a new {@code FileOperations} object. Initializes the file
-   * existence status, the file name, and the file itself.
+   * Constructs a new {@code FileOperations} object. Initializes the file existence status, the file
+   * name, and the file itself.
    *
-   * @param fileName The name of the file with which the operations will be
-   * performed.
+   * @param fileName The name of the file with which the operations will be performed.
    * @param fileExists A boolean indicating if the file already exists.
    */
   public FileOperations(String fileName, boolean fileExists) {
@@ -34,13 +33,11 @@ public class FileOperations {
   }
 
   /**
-   * Reads the content of the file line by line, splitting each line into an
-   * array of strings based on tab characters. Further splits each item by the
-   * first colon encountered and trims the result. Each line's items are stored
-   * as a String array and all lines are collected into a list.
+   * Reads the content of the file line by line, splitting each line into an array of strings based
+   * on tab characters. Further splits each item by the first colon encountered and trims the
+   * result. Each line's items are stored as a String array and all lines are collected into a list.
    *
-   * @return A list of string arrays, each representing the split content of one
-   * line in the file.
+   * @return A list of string arrays, each representing the split content of one line in the file.
    */
   public List<String[]> readFile() {
     List<String[]> fileContents = new ArrayList<>();
@@ -67,10 +64,9 @@ public class FileOperations {
   }
 
   /**
-   * Writes the provided information to the file. The information is appended to
-   * the end of the file. After writing, a success message is printed to the
-   * console. If an IOException occurs, it is caught and its stack trace is
-   * printed.
+   * Writes the provided information to the file. The information is appended to the end of the
+   * file. After writing, a success message is printed to the console. If an IOException occurs, it
+   * is caught and its stack trace is printed.
    *
    * @param information The data to be written to the file, as a single string.
    */
@@ -84,9 +80,9 @@ public class FileOperations {
   }
 
   /**
-   * Checks if the file specified by the 'fileName' exists and, if not, attempts
-   * to create it. Provides console output indicating whether the file exists,
-   * was created, or if the creation failed.
+   * Checks if the file specified by the 'fileName' exists and, if not, attempts to create it.
+   * Provides console output indicating whether the file exists, was created, or if the creation
+   * failed.
    */
   public void checkCreateFile() {
     if (!getFileExists()) {

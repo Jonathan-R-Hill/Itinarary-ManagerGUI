@@ -159,7 +159,7 @@ public class ItineraryInput {
     setReferenceNumber(reference);
   }
 
-  // TODO method currently working on this one
+  // TODO JavaDoc
   private String addonRequired(Scanner userInput, String activityCode) {
     boolean check = true;
     String code = activityCode;
@@ -175,13 +175,14 @@ public class ItineraryInput {
       }
     } catch (ArrayIndexOutOfBoundsException e) {
       System.out.println("Error within addonRequired array splitting\nMoving on");
+      System.out.println(e);
     }
 
     System.out.println("All activity addons are provided by\n------> Exciting Activities Ltd <------");
     while (check) {
       String checkHappy = "";
       boolean isValid = true;
-      
+
       System.out.println("""
                        Please choose the addons you would like if any. 
                        For Insurance. Enter: INS  (costs £20.00)
@@ -189,7 +190,7 @@ public class ItineraryInput {
                        For Photography. Enter: PHO  (costs £10.00)
                        If none are required. Enter: none""");
       String userChoice = userInput.nextLine().toUpperCase();
-      
+
       for (String addon : addonsAdded) {
         if (userChoice.equals(addon)) {
           isValid = false;
@@ -340,7 +341,7 @@ public class ItineraryInput {
           }
           case "none" -> {
             check = false;
-            }
+          }
           default -> {
             System.out.println("Please ensure you are inputting a valid entry from the list provided.");
           }
@@ -357,6 +358,7 @@ public class ItineraryInput {
 
   // TODO method
   private void generateReciept() {
+    calculateCosts();
 
     System.out.println("+------------------------------+");
     System.out.printf("| %-20s%-5s |\n", "PH", "PH");
@@ -364,14 +366,30 @@ public class ItineraryInput {
   }
 
   // TODO finish method test write to file 
-  public void gatherInformation(Scanner userInput) {
-    inputClientName(userInput);
-    inputTotalPeople(userInput);
-    inputDate(userInput);
-    inputActivities(userInput);
-    clientRefernece();
+  public void gatherInformation(Scanner userInput, FileOperations file) {
+    boolean check = true;
 
-    generateReciept();
+    while (check) {
+      inputClientName(userInput);
+      inputTotalPeople(userInput);
+      inputDate(userInput);
+      inputActivities(userInput);
+      clientRefernece();
+
+      generateReciept();
+      System.out.println("\n\n\n"); // Leave space between the reciept and question
+      String clientInformation = getClientName() + getDate() + getReferenceNumber()
+              + getActivityCodes() + getTotalActivities() + getTotalPeople();
+
+      file.writeToFile(clientInformation);
+
+      check = ValidationChecks.addAnother(userInput, "Customers itinerary");
+      if (check) {
+        // To clear the console to start another intinerary
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+      }
+    }
+
   }
 
   // ---------- Getters/Setters below ---------- //

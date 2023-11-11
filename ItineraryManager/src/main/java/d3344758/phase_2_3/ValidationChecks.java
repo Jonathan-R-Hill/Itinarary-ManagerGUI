@@ -7,12 +7,12 @@ import java.util.Scanner;
  * @author Jonathan Hill (d3344758)
  */
 public class ValidationChecks {
-  
+
   /**
-   * Prompts the user to decide on whether they are happy with their input or not
-   * returns a string of either "yes" or "no" for the method calling this to decide on
-   * whether to ask for the input again or end the loop
-   * 
+   * Prompts the user to decide on whether they are happy with their input or not returns a string
+   * of either "yes" or "no" for the method calling this to decide on whether to ask for the input
+   * again or end the loop
+   *
    * @param userInput A Scanner to take input from the user
    * @param param String of what the user is inputting to ask if they are happy with their input
    * @return String of yes or no for method logic to accept the input or loop
@@ -25,12 +25,12 @@ public class ValidationChecks {
     }
     return checkHappy;
   }
-  
+
   /**
-   * Prompts the user to decide on whether they are happy with their input or not
-   * returns a string of either "yes" or "no" for the method calling this to decide on
-   * whether to ask for the input again or end the loop
-   * 
+   * Prompts the user to decide on whether they are happy with their input or not returns a string
+   * of either "yes" or "no" for the method calling this to decide on whether to ask for the input
+   * again or end the loop
+   *
    * @param userInput A Scanner to take input from the user
    * @param param int of what the user is inputting to ask if they are happy with their input
    * @return String of yes or no for method logic to accept the input or loop
@@ -43,12 +43,12 @@ public class ValidationChecks {
     }
     return checkHappy;
   }
-  
-    /**
-   * Prompts the user to decide on whether they are happy with their input or not
-   * returns a string of either "yes" or "no" for the method calling this to decide on
-   * whether to ask for the input again or end the loop
-   * 
+
+  /**
+   * Prompts the user to decide on whether they are happy with their input or not returns a string
+   * of either "yes" or "no" for the method calling this to decide on whether to ask for the input
+   * again or end the loop
+   *
    * @param userInput A Scanner to take input from the user
    * @param param float of what the user is inputting to ask if they are happy with their input
    * @return String of yes or no for method logic to accept the input or loop
@@ -61,14 +61,15 @@ public class ValidationChecks {
     }
     return checkHappy;
   }
-  
-    /**
-   * Prompts the user to decide on whether they are happy with their input or not
-   * returns a string of either "yes" or "no" for the method calling this to decide on
-   * whether to ask for the input again or end the loop
-   * 
+
+  /**
+   * Prompts the user to decide on whether they are happy with their input or not returns a string
+   * of either "yes" or "no" for the method calling this to decide on whether to ask for the input
+   * again or end the loop
+   *
    * @param userInput A Scanner to take input from the user
-   * @param param (multiple) int of what the user is inputting to ask if they are happy with their input
+   * @param param (multiple) int of what the user is inputting to ask if they are happy with their
+   * input
    * @return String of yes or no for method logic to accept the input or loop
    */
   public static String checkHappy(Scanner userInput, int... param) {
@@ -80,12 +81,12 @@ public class ValidationChecks {
     }
     return checkHappy;
   }
-  
+
   /**
-   * Prompts the user to decide on whether they want to add another of
-   * what they are currently doing and loops the method that is currently running 
-   * if they chose "yes" and stops the method if they chose "no"
-   * 
+   * Prompts the user to decide on whether they want to add another of what they are currently doing
+   * and loops the method that is currently running if they chose "yes" and stops the method if they
+   * chose "no"
+   *
    * @param userInput A Scanner to take input from the user
    * @param param String of what the user is currently doing
    * @return boolean that will decide on whether to re-run the method
