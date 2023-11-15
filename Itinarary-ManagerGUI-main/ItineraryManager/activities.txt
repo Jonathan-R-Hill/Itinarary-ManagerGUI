@@ -1,0 +1,7 @@
+activity: Cookery	code: COO-11	location: Site Kitchen	start: 12:00	duration: 2.00	price: 12.00	description: A class where you learn and cook new dishes
+activity: SAS Assault Course	code: SAS-50	location: Outdoor Course	start: 15:30	duration: 1.25	price: 15.00	description: A course based on the SAS selection assault course
+activity: Arts & Crafts	code: ART-11	location: Art Studio	start: 10:20	duration: 1.00	price: 17.50	description: Learn various design patterns and painting techniques
+activity: Walking	code: WAL-01	location: Barrage	start: 17:30	duration: 1.50	price: 5.00	description: walk around the barrage
+activity: Dance	code: DAN-76	location: Dance Studio	start: 18:00	duration: 0.50	price: 3.00	description: Just dance party
+activity: Boxing	code: BOX-13	location: Gym	start: 13:00	duration: 0.50	price: 13.50	description: boxing workout
+activity: Programming 101	code: PRO-11	location: IT Lab 1	start: 13:30	duration: 2.25	price: 14.50	description: A class where you learn how to program using the Java Programming Language
