@@ -9,13 +9,13 @@ import java.util.Scanner;
 public class ValidationChecks {
 
   /**
-   * Prompts the user to decide on whether they are happy with their input or not returns a string
-   * of either "yes" or "no" for the method calling this to decide on whether to ask for the input
+   * Prompts the user to decide on whether they are happy with their input or not.
+   * returns a string of either "yes" or "no" for the method calling this to decide on whether to ask for the input
    * again or end the loop
    *
    * @param userInput A Scanner to take input from the user
    * @param param String of what the user is inputting to ask if they are happy with their input
-   * @return String of yes or no for method logic to accept the input or loop
+   * @return String of yes or no for method logic to accept input or not
    */
   public static String checkHappy(Scanner userInput, String param) {
     String checkHappy = "";
@@ -33,7 +33,7 @@ public class ValidationChecks {
    *
    * @param userInput A Scanner to take input from the user
    * @param param int of what the user is inputting to ask if they are happy with their input
-   * @return String of yes or no for method logic to accept the input or loop
+   * @return String of yes or no for method logic to accept input or not
    */
   public static String checkHappy(Scanner userInput, int param) {
     String checkHappy = "";
@@ -51,7 +51,7 @@ public class ValidationChecks {
    *
    * @param userInput A Scanner to take input from the user
    * @param param float of what the user is inputting to ask if they are happy with their input
-   * @return String of yes or no for method logic to accept the input or loop
+   * @return String of yes or no for method logic to accept input or not
    */
   public static String checkHappy(Scanner userInput, float param) {
     String checkHappy = "";
@@ -70,7 +70,7 @@ public class ValidationChecks {
    * @param userInput A Scanner to take input from the user
    * @param param (multiple) int of what the user is inputting to ask if they are happy with their
    * input
-   * @return String of yes or no for method logic to accept the input or loop
+   * @return String of yes or no for method logic to accept input or not
    */
   public static String checkHappy(Scanner userInput, int... param) {
     String checkHappy = "";
@@ -83,8 +83,8 @@ public class ValidationChecks {
   }
 
   /**
-   * Prompts the user to decide on whether they want to add another of what they are currently doing
-   * and loops the method that is currently running if they chose "yes" and stops the method if they
+   * Prompts the user to decide on whether they want to add another of what they are currently doing.
+   * Loops the method that is currently running if they chose "yes" and stops the method if they
    * chose "no"
    *
    * @param userInput A Scanner to take input from the user

@@ -8,7 +8,7 @@ import java.util.Scanner;
  * @author Jonathan Hill (d3344758)
  */
 public class NewActivityInput {
-
+  // TODO Go through javaDocs and talk about erros caught and what happens
   private String activityName;
   private String activityCode;
   private float baseCost;
@@ -345,12 +345,12 @@ public class NewActivityInput {
 
   /**
    * Interactively collects information about an activity from the user and writes it to a file if
-   * confirmed. Initially, it gathers user input for an ongoing activity using the `takeUserInput`
-   * method. Then, it displays the details of the activity. The user is then asked to confirm if
-   * they are happy with the details. If the user confirms, the information is written to a file
-   * using the provided `FileOperations` object. If the user is not happy with the details, they can
-   * start over by re-entering the information. Once a decision has been made the user is asked if
-   * they want to add another entry and will loop based on their choice.
+   * confirmed. Initially, it gathers user input for an activity using the `takeUserInput` method.
+   * Then, it displays the details of the activity. The user is then asked to confirm if they are
+   * happy with the details. If the user confirms, the information is written to a file using the
+   * provided `FileOperations` object. If the user is not happy with the details, they can start
+   * over by re-entering the information. Once a decision has been made the user is asked if they
+   * want to add another entry and will either loop or end based on their choice.
    *
    * @param userInput Scanner object to read user input from the console.
    * @param file FileOperations object to handle writing the collected information to a file.

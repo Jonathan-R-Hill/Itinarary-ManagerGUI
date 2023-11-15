@@ -36,6 +36,7 @@ public class FileOperations {
    * Reads the content of the file line by line, splitting each line into an array of strings based
    * on tab characters. Further splits each item by the first colon encountered and trims the
    * result. Each line's items are stored as a String array and all lines are collected into a list.
+   * If an IOException occurs, it is caught and its stack trace is printed.
    *
    * @return A list of string arrays, each representing the split content of one line in the file.
    */
@@ -73,7 +74,8 @@ public class FileOperations {
   public void writeToFile(String information) {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
       writer.append(information + "\n");
-      System.out.println("Write operation was successful!");
+      System.out.println("Write operation was successful.");
+      writer.close();
     } catch (IOException error) {
       error.printStackTrace();
     }

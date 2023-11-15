@@ -54,7 +54,7 @@ public class ItineraryInput {
       System.out.println("Please use a maximum of 20 characters.");
       String name = userInput.nextLine();
 
-      String[] nameSplit = name.trim().replaceAll("\\s+", " ").split(" ");
+      String[] nameSplit = name.trim().replaceAll("\\s+", " ").split(" ");  // Replaces multiple spaces with just one
       name = "";
       boolean isValid = true;
 
@@ -310,14 +310,13 @@ public class ItineraryInput {
                          Lunch (costs £4.00) Enter: lunch
                          Hotel Room for 1 night (cost £75.00) Enter: room
                          If you do not require any. Enter: none""");
-
       String userChoice = userInput.nextLine().toLowerCase();
 
       if (!itineraryAddons.isEmpty()) {
         for (String addon : itineraryAddons) {
           if (userChoice.equals(addon)) {
             isValid = false;
-            System.out.println("This has already been added. Please chose a different option.");
+            System.out.printf("\"%s\" has already been added. Please chose a different option.\n", userChoice);
             break;
           }
         }
@@ -336,7 +335,7 @@ public class ItineraryInput {
             checkHappy = ValidationChecks.checkHappy(userInput, userChoice);
 
             if (checkHappy.equals("yes")) {
-              itineraryAddons.add("Hotel Room");
+              itineraryAddons.add("room");
             }
           }
           case "none" -> {
@@ -351,7 +350,7 @@ public class ItineraryInput {
 
   }
 
-  // TODO method
+  // TODO method 
   private void calculateCosts() {
 
   }
@@ -360,9 +359,9 @@ public class ItineraryInput {
   private void generateReciept() {
     calculateCosts();
 
-    System.out.println("+------------------------------+");
+    System.out.println("+" + "-".repeat(25) + "+");
     System.out.printf("| %-20s%-5s |\n", "PH", "PH");
-    System.out.println("+------------------------------+");
+    System.out.println("+" + "-".repeat(25) + "+");
   }
 
   // TODO finish method test write to file 
