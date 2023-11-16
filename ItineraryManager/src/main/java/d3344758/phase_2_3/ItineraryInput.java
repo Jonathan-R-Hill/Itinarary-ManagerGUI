@@ -297,7 +297,7 @@ public class ItineraryInput {
     }
   }
 
-  // TODO JavaDoc
+  // TODO JavaDoc  -- make scale   create arrayList
   private void itineraryAddons(Scanner userInput) {
     boolean check = true;
 
@@ -312,9 +312,10 @@ public class ItineraryInput {
                          If you do not require any. Enter: none""");
       String userChoice = userInput.nextLine().toLowerCase();
 
-      if (!itineraryAddons.isEmpty()) {
-        for (String addon : itineraryAddons) {
-          if (userChoice.equals(addon)) {
+      if (!getItineraryAddons().isEmpty()) {
+        for (String addon : getItineraryAddons()) {
+          String[] addonSplit = addon.split(":");
+          if (userChoice.equals(addonSplit[0])) {
             isValid = false;
             System.out.printf("\"%s\" has already been added. Please chose a different option.\n", userChoice);
             break;
@@ -328,14 +329,14 @@ public class ItineraryInput {
             checkHappy = ValidationChecks.checkHappy(userInput, userChoice);
 
             if (checkHappy.equals("yes")) {
-              itineraryAddons.add("lunch");
+              setItineraryAddons("lunch:4.00");
             }
           }
           case "room" -> {
             checkHappy = ValidationChecks.checkHappy(userInput, userChoice);
 
             if (checkHappy.equals("yes")) {
-              itineraryAddons.add("room");
+              setItineraryAddons("room:75.00");
             }
           }
           case "none" -> {
@@ -347,12 +348,46 @@ public class ItineraryInput {
         }
       }
     }
+  }
 
+  // TODO method
+  private String[] calculateActivityCosts(List<String> activityCodes) {
+    String[] activityCosts = new String[activityCodes.size()];
+
+    int count = 0;
+    for (String info : activityCodes) {
+      String[] splitCode = info.split(":");
+      String code = splitCode[0];
+
+      for (String[] existingInfo : getActivityInformation()) {
+        String codeInExisting = existingInfo[1];
+        String priceInExisting = existingInfo[5];
+
+        if (code.equals(codeInExisting)) {
+          activityCosts[count] = priceInExisting;
+          count++;
+          break;
+        }
+      }
+
+    }
+
+    return activityCosts;
+  }
+
+  //TODO method   ----
+  private String[] calcItineraryAddOns(List<String> itineraryAddons) {
+    String[] addonCosts = new String[getItineraryAddons().size()];
+    
+    
+    
+    
+    return addonCosts;
   }
 
   // TODO method 
   private void calculateCosts() {
-
+    calculateActivityCosts(getActivityCodes());
   }
 
   // TODO method
@@ -454,6 +489,14 @@ public class ItineraryInput {
 
   public void setActivityInformation(List<String[]> activityInformation) {
     this.activityInformation = activityInformation;
+  }
+
+  public List<String> getItineraryAddons() {
+    return itineraryAddons;
+  }
+
+  public void setItineraryAddons(String info) {
+    this.itineraryAddons.add(info);
   }
 
 }
