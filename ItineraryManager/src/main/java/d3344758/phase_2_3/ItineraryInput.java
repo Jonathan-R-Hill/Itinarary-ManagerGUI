@@ -63,7 +63,7 @@ public class ItineraryInput {
       boolean isValid = true;
 
       for (String part : nameSplit) {
-        if (part.matches("^[a-zA-Z]*$")) {
+        if (part.matches("^[a-zA-Z]+$")) {  // regex  ^ = start   $ = end    + = atleast one valid char
           name += StringUtils.capitalize(part) + " ";
         } else {
           System.out.println("Invalid input. Please do not use numbers.");
@@ -315,7 +315,7 @@ public class ItineraryInput {
                          Please enter the name of the addon you would like as it is wrote
                          If you do not require any. Enter: none""");
       for (String[] addon : getExistingItineraryAddonInformation()) {
-        System.out.println(addon[0]);
+        System.out.println(addon[0].trim());
       }
       String userChoice = userInput.nextLine().toLowerCase();
 
