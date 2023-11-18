@@ -27,13 +27,17 @@ public class ItineraryInput {
   private String[] exsistingActivities;
   private List<String> itineraryAddons = new ArrayList<>();
   private List<String[]> activityInformation;
+  private List<String[]> existingItineraryAddonInformation;
 
   // TODO JavaDoc
   public void populateExistingData() {
     FileOperations readActivities = new FileOperations("activities.txt", true);
+    FileOperations readItineraryAddons = new FileOperations("addons.txt", true);
     readActivities.checkCreateFile();
+    readItineraryAddons.checkCreateFile();
     setActivityInformation(readActivities.readFile());
     setExsistingActivities(new String[getActivityInformation().size()]);
+    setExistingItineraryAddonInformation(readItineraryAddons.readFile());
 
     int counter = 0;  // for adding the items to the array
     for (String[] items : getActivityInformation()) {
@@ -297,19 +301,22 @@ public class ItineraryInput {
     }
   }
 
-  // TODO JavaDoc  -- make scale   create arrayList
-  private void itineraryAddons(Scanner userInput) {
+  // TODO JavaDoc  -- test
+  private void inputItineraryAddons(Scanner userInput) {
     boolean check = true;
 
     while (check) {
       boolean isValid = true;
       String checkHappy = "";
+      String addonPrice = "";
 
       System.out.println("""
-                         Would you like any Itinerary addons? The options we have are:
-                         Lunch (costs £4.00) Enter: lunch
-                         Hotel Room for 1 night (cost £75.00) Enter: room
+                         Would you like any Itinerary addons?
+                         Please enter the name of the addon you would like as it is wrote
                          If you do not require any. Enter: none""");
+      for (String[] addon : getExistingItineraryAddonInformation()) {
+        System.out.println(addon[0]);
+      }
       String userChoice = userInput.nextLine().toLowerCase();
 
       if (!getItineraryAddons().isEmpty()) {
@@ -324,34 +331,25 @@ public class ItineraryInput {
       }
 
       if (isValid) {
-        switch (userChoice) {
-          case "lunch" -> {
-            checkHappy = ValidationChecks.checkHappy(userInput, userChoice);
+        checkHappy = ValidationChecks.checkHappy(userInput, userChoice);
 
-            if (checkHappy.equals("yes")) {
-              setItineraryAddons("lunch:4.00");
+        if (checkHappy.equals("yes")) {
+          for (String[] addon : getExistingItineraryAddonInformation()) {
+            if (addon[0].equals(userChoice)) {
+              addonPrice = addon[1];
+              break;
             }
+            System.out.println(addon[0]);
           }
-          case "room" -> {
-            checkHappy = ValidationChecks.checkHappy(userInput, userChoice);
-
-            if (checkHappy.equals("yes")) {
-              setItineraryAddons("room:75.00");
-            }
-          }
-          case "none" -> {
-            check = false;
-          }
-          default -> {
-            System.out.println("Please ensure you are inputting a valid entry from the list provided.");
-          }
+          setItineraryAddons(userChoice + ":" + addonPrice);
         }
       }
+
     }
   }
 
-  // TODO method
-  private String[] calculateActivityCosts(List<String> activityCodes) {
+  // TODO finish method
+  private String[] calcActivityCosts(List<String> activityCodes) {
     String[] activityCosts = new String[activityCodes.size()];
 
     int count = 0;
@@ -375,19 +373,16 @@ public class ItineraryInput {
     return activityCosts;
   }
 
-  //TODO method   ----
+  //TODO method   
   private String[] calcItineraryAddOns(List<String> itineraryAddons) {
     String[] addonCosts = new String[getItineraryAddons().size()];
-    
-    
-    
-    
+
     return addonCosts;
   }
 
   // TODO method 
   private void calculateCosts() {
-    calculateActivityCosts(getActivityCodes());
+
   }
 
   // TODO method
@@ -497,6 +492,14 @@ public class ItineraryInput {
 
   public void setItineraryAddons(String info) {
     this.itineraryAddons.add(info);
+  }
+
+  public List<String[]> getExistingItineraryAddonInformation() {
+    return existingItineraryAddonInformation;
+  }
+
+  public void setExistingItineraryAddonInformation(List<String[]> existingItineraryAddonInformation) {
+    this.existingItineraryAddonInformation = existingItineraryAddonInformation;
   }
 
 }
