@@ -8,6 +8,7 @@ import java.util.Scanner;
  * @author Jonathan Hill (d3344758)
  */
 public class NewActivityInput {
+
   // TODO Go through javaDocs and talk about erros caught and what happens
   private String activityName;
   private String activityCode;
@@ -88,16 +89,16 @@ public class NewActivityInput {
    * validates the input to ensure it's a non-negative number. The user is given the option to
    * confirm or change the entered base cost. If the user confirms the price, the provided base cost
    * is accepted and stored. If the user rejects the price, they can re-enter the base cost. Loops
-   * until the user enters a valid number and confirms their entry.
+   * until the user enters a valid number and confirms their entry. stored as pence
    *
    * @param userInput A Scanner object to read user input.
    * @throws InputMismatchException If the user enters a non-numeric value.
    */
   private void activityPrice(Scanner userInput) {
     boolean check = true;
-    String checkHappy = "";
 
     while (check) {
+      String checkHappy = "";
       try {
         System.out.println("Please enter the base cost of the activity as a number: ");
         float activityPrice = userInput.nextFloat();
@@ -107,10 +108,9 @@ public class NewActivityInput {
 
           if (checkHappy.equals("yes")) {
             check = false;
-            setBaseCost(activityPrice);
+            setBaseCost(activityPrice * 100);
           } else {
             activityPrice = -1.00f;
-            checkHappy = "";
           }
         } else {
           System.out.println("Please enter a number great than or equal to 0.");
@@ -134,9 +134,9 @@ public class NewActivityInput {
    */
   private void activityLocation(Scanner userInput) {
     boolean check = true;
-    String checkHappy = "";
 
     while (check) {
+      String checkHappy = "";
       System.out.println("Please enter the location of the activity: ");
       String activityLocation = userInput.nextLine();
 
@@ -147,7 +147,6 @@ public class NewActivityInput {
         setLocation(activityLocation);
       } else {
         activityLocation = "";
-        checkHappy = "";
       }
     }
   }
@@ -163,11 +162,11 @@ public class NewActivityInput {
    */
   private void activityDuration(Scanner userInput) {
     boolean check = true;
-    String checkHappy = "";
     int durationHours = 0;
     int durationMinutes = 0;
 
     while (check) {
+          String checkHappy = "";
       try {
         System.out.println("Please enter how long the event is expected to last (cannot be a negative number): ");
         System.out.print("Hours: ");
@@ -195,10 +194,7 @@ public class NewActivityInput {
         if (checkHappy.equals("yes")) {
           check = false;
           setExpectedDuration(totalTime);
-        } else {
-          checkHappy = "";
         }
-
       } catch (InputMismatchException error) {
         userInput.nextLine();
         System.out.println(error + "\n");

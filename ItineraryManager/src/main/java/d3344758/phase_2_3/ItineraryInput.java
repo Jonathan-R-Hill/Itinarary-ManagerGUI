@@ -163,7 +163,7 @@ public class ItineraryInput {
     setReferenceNumber(reference);
   }
 
-  // TODO JavaDoc
+  // TODO JavaDoc   --- Might re-write
   private String addonRequired(Scanner userInput, String activityCode) {
     boolean check = true;
     String code = activityCode;
