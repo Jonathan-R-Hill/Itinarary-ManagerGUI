@@ -28,13 +28,13 @@ public class NewActivityInput {
    */
   private void activityTitle(Scanner userInput) {
     boolean check = true;
-    String checkHappy = "";
 
     while (check) {
+      String checkHappy = "";
       System.out.println("Please enter the name of your activity");
       String activityname = userInput.nextLine();
 
-      if (activityname != "") {
+      if (!activityname.equals("")) {
         checkHappy = ValidationChecks.checkHappy(userInput, activityname);
       } else {
         System.out.println("Please ensure you enter a name for the activity.");
@@ -43,8 +43,6 @@ public class NewActivityInput {
       if (checkHappy.equals("yes")) {
         check = false;
         setActivityName(activityname);
-      } else {
-        checkHappy = "";
       }
     }
     System.out.println();
@@ -59,9 +57,9 @@ public class NewActivityInput {
    */
   private void activityCode(Scanner userInput) {
     boolean check = true;
-    String checkHappy = "";
 
     while (check) {
+      String checkHappy = "";
       System.out.println("Please enter the activity code in the format: abc-00 (3 letters hyphen 2 digits)");
       String activityCode = userInput.nextLine().strip().trim().toUpperCase();
 
@@ -77,9 +75,6 @@ public class NewActivityInput {
       if (checkHappy.equals("yes")) {
         check = false;
         setActivityCode(activityCode);
-      } else {
-        activityCode = "";
-        checkHappy = "";
       }
     }
   }
@@ -109,8 +104,6 @@ public class NewActivityInput {
           if (checkHappy.equals("yes")) {
             check = false;
             setBaseCost(activityPrice * 100);
-          } else {
-            activityPrice = -1.00f;
           }
         } else {
           System.out.println("Please enter a number great than or equal to 0.");
@@ -145,8 +138,6 @@ public class NewActivityInput {
       if (checkHappy.equals("yes")) {
         check = false;
         setLocation(activityLocation);
-      } else {
-        activityLocation = "";
       }
     }
   }
@@ -166,7 +157,7 @@ public class NewActivityInput {
     int durationMinutes = 0;
 
     while (check) {
-          String checkHappy = "";
+      String checkHappy = "";
       try {
         System.out.println("Please enter how long the event is expected to last (cannot be a negative number): ");
         System.out.print("Hours: ");
@@ -332,11 +323,7 @@ public class NewActivityInput {
       checkAgain = userInput.nextLine();
     }
 
-    if (checkAgain.equals("yes")) {
-      return true;
-    }
-
-    return false;
+    return checkAgain.equals("yes");
   }
 
   /**

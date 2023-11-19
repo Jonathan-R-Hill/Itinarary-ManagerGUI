@@ -404,6 +404,7 @@ public class ItineraryInput {
       inputDate(userInput);
       inputActivities(userInput);
       clientRefernece();
+      inputItineraryAddons(userInput);
 
       generateReciept();
       System.out.println("\n\n\n"); // Leave space between the reciept and question

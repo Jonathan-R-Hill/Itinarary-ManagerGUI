@@ -98,10 +98,7 @@ public class ValidationChecks {
       check = userInput.nextLine().toLowerCase().trim().strip();
     }
 
-    if (check.equals("yes")) {
-      return true;
-    }
-    return false;
+    return check.equals("yes");
   }
 
 }
