@@ -45,6 +45,7 @@ public class ItineraryInput {
       getExsistingActivities()[counter] = items[0];
       counter++;
     }
+    setTotalActivities(getExsistingActivities().length);
   }
 
   // TODO JavaDoc   --I really hate regex
@@ -256,14 +257,15 @@ public class ItineraryInput {
     return code;
   }
 
-  // TODO JavaDoc  Duplcation Checking? 
+  // TODO JavaDoc  --- test
   private void inputActivities(Scanner userInput) {
     boolean check = true;
-    int totalActivities = getExsistingActivities().length;
-    String checkHappy = "";
 
     while (check) {
-      for (int i = 0; i < totalActivities; i++) {
+      boolean isValid = false;
+      String checkHappy = "";
+
+      for (int i = 0; i < getTotalActivities(); i++) {
         System.out.print("Activity number " + i + ":  " + getExsistingActivities()[i] + "\t");
         if (i % 3 == 0 && i != 0) {
           System.out.println(""); // To make it easier for the user to read the activities
@@ -271,15 +273,23 @@ public class ItineraryInput {
       }
 
       try {
-        System.out.println("Please enter the activity you would like to add. "
-                + "Pick a number from the list provided.");
+        System.out.println("Please enter the activity you would like to add. Pick a number from the list provided.");
         int userChoice = userInput.nextInt();
         userInput.nextLine();
 
-        if (userChoice <= totalActivities && userChoice >= 0) {
+        if (userChoice <= getTotalActivities() && userChoice >= 0) {
           String userActivity = getExsistingActivities()[userChoice];
-
-          checkHappy = ValidationChecks.checkHappy(userInput, userActivity);
+          
+          for (String activity : activities) {
+            if (activity.equals(userActivity)) {
+              isValid = false;
+              break;
+            }
+          }
+          
+          if (isValid) {
+            checkHappy = ValidationChecks.checkHappy(userInput, userActivity);
+          }
         } else {
           System.out.println("Please pick a number from the activities provided.");
         }
@@ -367,9 +377,7 @@ public class ItineraryInput {
           break;
         }
       }
-
     }
-
     return activityCosts;
   }
 
@@ -382,7 +390,8 @@ public class ItineraryInput {
 
   // TODO method 
   private void calculateCosts() {
-
+    calcActivityCosts(activities);
+    calcItineraryAddOns(getItineraryAddons());
   }
 
   // TODO method
@@ -394,7 +403,7 @@ public class ItineraryInput {
     System.out.println("+" + "-".repeat(25) + "+");
   }
 
-  // TODO finish method test write to file 
+  // TODO finish method 
   public void gatherInformation(Scanner userInput, FileOperations file) {
     boolean check = true;
 
@@ -405,6 +414,7 @@ public class ItineraryInput {
       inputActivities(userInput);
       clientRefernece();
       inputItineraryAddons(userInput);
+      calculateCosts();
 
       generateReciept();
       System.out.println("\n\n\n"); // Leave space between the reciept and question

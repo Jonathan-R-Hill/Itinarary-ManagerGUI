@@ -19,14 +19,14 @@ public class MainPhase2 {
     }
 
     if (staffChoice.equals("custom")) {
-      ItineraryInput customerInput = new ItineraryInput();
-      FileOperations addItineryToFile = new FileOperations("itineraries.txt", false);
+      var customerInput = new ItineraryInput();
+      var addItineryToFile = new FileOperations("itineraries.txt", false);
       addItineryToFile.checkCreateFile();
       customerInput.populateExistingData();
       customerInput.gatherInformation(userInput, addItineryToFile);
     } else {
-      NewActivityInput addActivity = new NewActivityInput();
-      FileOperations addActivityToFile = new FileOperations("activities.txt", false);
+      var addActivity = new NewActivityInput();
+      var addActivityToFile = new FileOperations("activities.txt", false);
       addActivityToFile.checkCreateFile();
       addActivity.collectInformation(userInput, addActivityToFile);
     }
