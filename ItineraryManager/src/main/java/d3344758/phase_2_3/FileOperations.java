@@ -40,7 +40,7 @@ public class FileOperations {
    *
    * @return A list of string arrays, each representing the split content of one line in the file.
    */
-  public List<String[]> readFile() {
+  public List<String[]> readFile() {  // TODO change to take in each string to pass to create objects
     List<String[]> fileContents = new ArrayList<>();
 
     try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {

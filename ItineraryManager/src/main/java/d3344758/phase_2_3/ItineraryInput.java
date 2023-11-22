@@ -118,7 +118,7 @@ public class ItineraryInput {
           }
         }
       } catch (DateTimeParseException e) {
-        System.out.println("Please ensure you enter the date in the correct format: DD-MM-YYYY");
+        System.out.println("Please ensure you enter a valid date and in the correct format: DD-MM-YYYY");
       }
     }
   }
@@ -191,7 +191,7 @@ public class ItineraryInput {
       System.out.println("""
                        Please choose the addons you would like if any. 
                        For Insurance. Enter: INS  (costs £20.00)
-                       For Travel. Enter: TRN (costs £2.00)
+                       For Travel. Enter: TRV (costs £2.00)
                        For Photography. Enter: PHO  (costs £10.00)
                        If none are required. Enter: none""");
       String userChoice = userInput.nextLine().toUpperCase();
@@ -205,15 +205,15 @@ public class ItineraryInput {
 
       if (isValid) {
         switch (userChoice) {
-          case "TRN" -> {
-            checkHappy = ValidationChecks.checkHappy(userInput, "Travel (TVN)");
+          case "TRV" -> {
+            checkHappy = ValidationChecks.checkHappy(userInput, "Travel (TRV)");
             if (checkHappy.equals("yes")) {
               if (addonCounter == 0) {
                 code += ":";
               }
-              code += "TRN,";
+              code += "TRV,";
               addonCounter += 1;
-              addonsAdded.add("TRN,");
+              addonsAdded.add("TRV,");
               check = ValidationChecks.addAnother(userInput, "addon");
             }
           }
@@ -257,12 +257,12 @@ public class ItineraryInput {
     return code;
   }
 
-  // TODO JavaDoc  --- test
-  private void inputActivities(Scanner userInput) {
+  // TODO JavaDoc  --- test -- fix
+  public void inputActivities(Scanner userInput) {
     boolean check = true;
 
     while (check) {
-      boolean isValid = false;
+      boolean isValid = true;
       String checkHappy = "";
 
       for (int i = 0; i < getTotalActivities(); i++) {
@@ -277,16 +277,18 @@ public class ItineraryInput {
         int userChoice = userInput.nextInt();
         userInput.nextLine();
 
-        if (userChoice <= getTotalActivities() && userChoice >= 0) {
+        if (userChoice < getTotalActivities() && userChoice >= 0) {
           String userActivity = getExsistingActivities()[userChoice];
-          
-          for (String activity : activities) {
-            if (activity.equals(userActivity)) {
-              isValid = false;
-              break;
+
+          if (!activities.isEmpty()) {
+            for (String activity : activities) {
+              if (activity.equals(userActivity)) {
+                isValid = false;
+                break;
+              }
             }
           }
-          
+
           if (isValid) {
             checkHappy = ValidationChecks.checkHappy(userInput, userActivity);
           }
@@ -358,51 +360,6 @@ public class ItineraryInput {
     }
   }
 
-  // TODO finish method
-  private String[] calcActivityCosts(List<String> activityCodes) {
-    String[] activityCosts = new String[activityCodes.size()];
-
-    int count = 0;
-    for (String info : activityCodes) {
-      String[] splitCode = info.split(":");
-      String code = splitCode[0];
-
-      for (String[] existingInfo : getActivityInformation()) {
-        String codeInExisting = existingInfo[1];
-        String priceInExisting = existingInfo[5];
-
-        if (code.equals(codeInExisting)) {
-          activityCosts[count] = priceInExisting;
-          count++;
-          break;
-        }
-      }
-    }
-    return activityCosts;
-  }
-
-  //TODO method   
-  private String[] calcItineraryAddOns(List<String> itineraryAddons) {
-    String[] addonCosts = new String[getItineraryAddons().size()];
-
-    return addonCosts;
-  }
-
-  // TODO method 
-  private void calculateCosts() {
-    calcActivityCosts(activities);
-    calcItineraryAddOns(getItineraryAddons());
-  }
-
-  // TODO method
-  private void generateReciept() {
-    calculateCosts();
-
-    System.out.println("+" + "-".repeat(25) + "+");
-    System.out.printf("| %-20s%-5s |\n", "PH", "PH");
-    System.out.println("+" + "-".repeat(25) + "+");
-  }
-
   // TODO finish method 
   public void gatherInformation(Scanner userInput, FileOperations file) {
     boolean check = true;
@@ -414,12 +371,10 @@ public class ItineraryInput {
       inputActivities(userInput);
       clientRefernece();
       inputItineraryAddons(userInput);
-      calculateCosts();
 
-      generateReciept();
       System.out.println("\n\n\n"); // Leave space between the reciept and question
-      String clientInformation = getClientName() + getDate() + getReferenceNumber()
-              + getActivityCodes() + getTotalActivities() + getTotalPeople();
+      String clientInformation = getClientName() + "\t" + getDate() + "\t" + getReferenceNumber() + "\t"
+              + getActivityCodes() + "\t" + getTotalActivities() + "\t" + getTotalPeople();
 
       file.writeToFile(clientInformation);
 

@@ -9,7 +9,7 @@ import java.util.Scanner;
  */
 public class NewActivityInput {
 
-  // TODO Go through javaDocs and talk about erros caught and what happens
+  // TODO Go through javaDocs and talk about errors caught and what happens
   private String activityName;
   private String activityCode;
   private float baseCost;
