@@ -35,7 +35,7 @@ public class NewActivityInput {
       String activityname = userInput.nextLine();
 
       if (!activityname.equals("")) {
-        checkHappy = ValidationChecks.checkHappy(userInput, activityname);
+        checkHappy = UserValidationChecks.checkHappy(userInput, activityname);
       } else {
         System.out.println("Please ensure you enter a name for the activity.");
       }
@@ -69,7 +69,7 @@ public class NewActivityInput {
         checkHappy = "no";
         System.out.println("Please ensure you are entering the code correctly.");
       } else {
-        checkHappy = ValidationChecks.checkHappy(userInput, activityCode);
+        checkHappy = UserValidationChecks.checkHappy(userInput, activityCode);
       }
 
       if (checkHappy.equals("yes")) {
@@ -99,7 +99,7 @@ public class NewActivityInput {
         float activityPrice = userInput.nextFloat();
         if (activityPrice >= 0.00) {
           userInput.nextLine(); // consume the new line char or any input that is leftover
-          checkHappy = ValidationChecks.checkHappy(userInput, activityPrice);
+          checkHappy = UserValidationChecks.checkHappy(userInput, activityPrice);
 
           if (checkHappy.equals("yes")) {
             check = false;
@@ -133,7 +133,7 @@ public class NewActivityInput {
       System.out.println("Please enter the location of the activity: ");
       String activityLocation = userInput.nextLine();
 
-      checkHappy = ValidationChecks.checkHappy(userInput, activityLocation);
+      checkHappy = UserValidationChecks.checkHappy(userInput, activityLocation);
 
       if (checkHappy.equals("yes")) {
         check = false;
@@ -179,7 +179,7 @@ public class NewActivityInput {
           System.out.println("Please re-enter your time. Please do not enter negative numbers and "
                   + "ensure you are not entering more than 59 minutes.");
         } else {
-          checkHappy = ValidationChecks.checkHappy(userInput, durationHours, durationMinutes);
+          checkHappy = UserValidationChecks.checkHappy(userInput, durationHours, durationMinutes);
         }
 
         if (checkHappy.equals("yes")) {
@@ -252,7 +252,7 @@ public class NewActivityInput {
         String timeToStore = String.join(":", timeArrayStrings);
 
         if (!checkHappy.equals("no")) {
-          checkHappy = ValidationChecks.checkHappy(userInput, timeToStore);
+          checkHappy = UserValidationChecks.checkHappy(userInput, timeToStore);
         }
 
         if (checkHappy.equals("yes")) {
@@ -276,7 +276,7 @@ public class NewActivityInput {
       System.out.println("Please enter a short description of the activity " + getActivityName() + ": ");
       String description = userInput.nextLine();
 
-      String checkHappy = ValidationChecks.checkHappy(userInput, description);
+      String checkHappy = UserValidationChecks.checkHappy(userInput, description);
 
       if (checkHappy.equals("yes")) {
         check = false;

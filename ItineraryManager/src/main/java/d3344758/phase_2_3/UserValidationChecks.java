@@ -6,7 +6,7 @@ import java.util.Scanner;
  *
  * @author Jonathan Hill (d3344758)
  */
-public class ValidationChecks {
+public class UserValidationChecks {
 
   /**
    * Prompts the user to decide on whether they are happy with their input or not.

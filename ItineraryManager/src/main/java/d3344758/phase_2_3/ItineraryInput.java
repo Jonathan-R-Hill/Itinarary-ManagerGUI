@@ -4,12 +4,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -48,10 +46,9 @@ public class ItineraryInput {
     setTotalActivities(getExsistingActivities().length);
   }
 
-  // TODO JavaDoc   --I really hate regex
+  // TODO JavaDoc
   private void inputClientName(Scanner userInput) {
     boolean check = true;
-    String checkHappy = "";
 
     while (check) {
       System.out.println("Please enter the name of the client. Enter as: "
@@ -59,48 +56,68 @@ public class ItineraryInput {
       System.out.println("Please use a maximum of 20 characters.");
       String name = userInput.nextLine();
 
-      String[] nameSplit = name.trim().replaceAll("\\s+", " ").split(" ");  // Replaces multiple spaces with just one
-      name = "";
-      boolean isValid = true;
+      if (NameValidation.checkClientName(name)) {
+        String checkHappy = UserValidationChecks.checkHappy(userInput, name);
 
-      for (String part : nameSplit) {
-        if (part.matches("^[a-zA-Z]+$")) {  // regex  ^ = start   $ = end    + = atleast one valid char
-          name += StringUtils.capitalize(part) + " ";
-        } else {
-          System.out.println("Invalid input. Please do not use numbers.");
-          isValid = false;
-          break;
-        }
-      }
-
-      if (isValid && name.length() <= 20 && nameSplit.length >= 2) {
-        checkHappy = ValidationChecks.checkHappy(userInput, name);
         if (checkHappy.equals("yes")) {
           check = false;
           setClientName(name.trim());
         }
-      } else if (name.length() > 20) {
-        System.out.println("Please ensure the name is less than 20 characters long. "
-                + "If it is more, please shorten the last name.");
       }
     }
   }
 
-  // TODO JavaDoc
+  /**
+   * Prompts the user to input the number of people in their party. Catches any errors related to
+   * entering: Characters and negative numbers
+   *
+   * @param userInput The Scanner object for user input.
+   */
+  // TODO -- might change try catch for regex?
+  private void inputTotalPeople(Scanner userInput) {
+    boolean isValidInput = false;
+
+    while (!isValidInput) {
+      int numberOfPeople = 0;
+      try {
+        System.out.println("Please enter the number of people in your party.");
+        numberOfPeople = userInput.nextInt();
+        userInput.nextLine();
+
+        if (numberOfPeople >= 1) {
+          if (UserValidationChecks.checkHappy(userInput, numberOfPeople).equals("yes")) {
+            isValidInput = true;
+            setTotalPeople(numberOfPeople);
+            System.out.println("The total people are set as: " + numberOfPeople);
+          }
+        } else {
+          System.out.println("Please ensure you enter a number equal to or greater than 1.");
+        }
+      } catch (InputMismatchException error) {
+        System.out.println("Please enter a valid number. E.g: 5");
+        userInput.nextLine();
+      }
+    }
+  }
+
+  /**
+   * Prompts the user to input the date for the booked activities.
+   *
+   * @param userInput The Scanner object for user input.
+   */
   private void inputDate(Scanner userInput) {
-    boolean check = true;
+    boolean isValidInput = true;
 
     LocalDate today = LocalDate.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     String formattedDate = today.format(formatter);
 
-    while (check) {
-      String checkHappy = "";
-
+    while (isValidInput) {
       System.out.printf("""
                         Please enter the date the activities are being booked for. Enter in the format: DD-MM-YYYY.
-                        For Example todays date is: %s
+                        For example, today's date is: %s
                         """, formattedDate);
+
       String userDateInput = userInput.nextLine().trim();
 
       try {
@@ -109,52 +126,22 @@ public class ItineraryInput {
         if (userDate.isBefore(today)) {
           System.out.println("The date entered is in the past. Please enter a future date.");
         } else {
-          checkHappy = ValidationChecks.checkHappy(userInput, userDateInput);
-
-          if (checkHappy.equals("yes")) {
+          if (UserValidationChecks.checkHappy(userInput, userDateInput).equals("yes")) {
             System.out.println("The date is set for: " + userDate.format(formatter));
-            check = false;
+            isValidInput = false;
             setDate(userDateInput);
           }
         }
       } catch (DateTimeParseException e) {
-        System.out.println("Please ensure you enter a valid date and in the correct format: DD-MM-YYYY");
+        System.out.println("Please ensure you enter a valid date in the format: DD-MM-YYYY");
       }
     }
   }
 
-  // TODO JavaDoc
-  private void inputTotalPeople(Scanner userInput) {
-    boolean check = true;
-    int numberOfPeople = 0;
-
-    while (check) {
-      String checkHappy = "";
-      try {
-        System.out.println("Please enter the amount of people in your party.");
-        numberOfPeople = userInput.nextInt();
-        userInput.nextLine();
-
-        if (numberOfPeople >= 1) {
-          checkHappy = ValidationChecks.checkHappy(userInput, numberOfPeople);
-        } else {
-          System.out.println("Please ensure you are entering a number equal to or greater than 1");
-        }
-
-        if (checkHappy.equals("yes")) {
-          check = false;
-          setTotalPeople(numberOfPeople);
-          System.out.println("The total people is set as: " + numberOfPeople);
-        }
-      } catch (InputMismatchException error) {
-        System.out.println("Please enter as a number. EG: 5");
-        numberOfPeople = 0;
-        userInput.nextLine();
-      }
-    }
-  }
-
-  // TODO JavaDoc
+  /**
+   * Generates a reference code consisting of 2 random letters 3 random numbers and a random letter
+   * setting the referenceNumber to the 3 joined as a String
+   */
   private void clientRefernece() {
     String startLetters = RandomStringUtils.randomAlphabetic(2).toUpperCase();
     String numbers = RandomStringUtils.randomNumeric(3);
@@ -164,97 +151,32 @@ public class ItineraryInput {
     setReferenceNumber(reference);
   }
 
-  // TODO JavaDoc   --- Might re-write
   private String addonRequired(Scanner userInput, String activityCode) {
-    boolean check = true;
-    String code = activityCode;
-    ArrayList<String> addonsAdded = new ArrayList<>();
-    int addonCounter = addonsAdded.size();
-
-    try {
-      String[] splitCode = code.split(":");
-      String[] addonsSplit = splitCode[1].split(",");
-
-      if (splitCode.length != 1) {
-        addonsAdded.addAll(Arrays.asList(addonsSplit));
-      }
-    } catch (ArrayIndexOutOfBoundsException e) {
-      System.out.println("Error within addonRequired array splitting\nMoving on");
-      System.out.println(e);
-    }
+    List<String> addonsAdded = new ArrayList<>();
 
     System.out.println("All activity addons are provided by\n------> Exciting Activities Ltd <------");
-    while (check) {
-      String checkHappy = "";
-      boolean isValid = true;
 
+    while (true) {
       System.out.println("""
-                       Please choose the addons you would like if any. 
-                       For Insurance. Enter: INS  (costs £20.00)
-                       For Travel. Enter: TRV (costs £2.00)
-                       For Photography. Enter: PHO  (costs £10.00)
-                       If none are required. Enter: none""");
+                Please choose the addons you would like if any. 
+                For Insurance. Enter: INS  (costs £20.00)
+                For Travel. Enter: TRV (costs £2.00)
+                For Photography. Enter: PHO  (costs £10.00)
+                If none are required. Enter: none""");
+
       String userChoice = userInput.nextLine().toUpperCase();
 
-      for (String addon : addonsAdded) {
-        if (userChoice.equals(addon)) {
-          isValid = false;
-          break;
-        }
-      }
+      if (!addonsAdded.contains(userChoice)) {
+        boolean validChoice = AddonValidation.handleAddonChoice(userInput, activityCode, addonsAdded, userChoice);
 
-      if (isValid) {
-        switch (userChoice) {
-          case "TRV" -> {
-            checkHappy = ValidationChecks.checkHappy(userInput, "Travel (TRV)");
-            if (checkHappy.equals("yes")) {
-              if (addonCounter == 0) {
-                code += ":";
-              }
-              code += "TRV,";
-              addonCounter += 1;
-              addonsAdded.add("TRV,");
-              check = ValidationChecks.addAnother(userInput, "addon");
-            }
-          }
-          case "INS" -> {
-            checkHappy = ValidationChecks.checkHappy(userInput, "Insurance (INS)");
-            if (checkHappy.equals("yes")) {
-              if (addonCounter == 0) {
-                code += ":";
-              }
-              code += "INS,";
-              addonCounter += 1;
-              addonsAdded.add("INS,");
-              check = ValidationChecks.addAnother(userInput, "addon");
-            }
-          }
-          case "PHO" -> {
-            checkHappy = ValidationChecks.checkHappy(userInput, "Photography (PHO)");
-            if (checkHappy.equals("yes")) {
-              if (addonCounter == 0) {
-                code += ":";
-              }
-              code += "PHO,";
-              addonCounter += 1;
-              addonsAdded.add("PHO,");
-              check = ValidationChecks.addAnother(userInput, "addon");
-            }
-          }
-          case "NONE" -> {
-            check = false;
-          }
-          default -> {
-            System.out.println("Please ensure you enter one of the codes OR none");
-          }
-
+        if (validChoice) {
+          System.out.println("Addon added.");
+          return activityCode;
         }
       } else {
-        System.out.println("That has already been addon to the Activity.");
+        System.out.println("That has already been added to the Activity.");
       }
-
     }
-    return code;
   }
 
   // TODO JavaDoc  --- test -- fix
@@ -263,7 +185,6 @@ public class ItineraryInput {
 
     while (check) {
       boolean isValid = true;
-      String checkHappy = "";
 
       for (int i = 0; i < getTotalActivities(); i++) {
         System.out.print("Activity number " + i + ":  " + getExsistingActivities()[i] + "\t");
@@ -280,31 +201,29 @@ public class ItineraryInput {
         if (userChoice < getTotalActivities() && userChoice >= 0) {
           String userActivity = getExsistingActivities()[userChoice];
 
-          if (!activities.isEmpty()) {
-            for (String activity : activities) {
-              if (activity.equals(userActivity)) {
-                isValid = false;
-                break;
-              }
+          for (String activity : activities) {
+            if (activity.equals(userActivity)) {
+              isValid = false;
+              break;
             }
           }
 
           if (isValid) {
-            checkHappy = ValidationChecks.checkHappy(userInput, userActivity);
+            String checkHappy = UserValidationChecks.checkHappy(userInput, userActivity);
+
+            if (checkHappy.equals("yes")) {
+              String[] activityInfo = getActivityInformation().get(userChoice);
+              String code = activityInfo[1];
+              activities.add(getExsistingActivities()[userChoice]);
+
+              code = addonRequired(userInput, code);
+              activityCodes.add(code);
+
+              check = UserValidationChecks.addAnother(userInput, "Activity");
+            }
           }
         } else {
           System.out.println("Please pick a number from the activities provided.");
-        }
-
-        if (checkHappy.equals("yes")) {
-          String[] activityInfo = getActivityInformation().get(userChoice);
-          String code = activityInfo[1];
-          activities.add(getExsistingActivities()[userChoice]);
-
-          code = addonRequired(userInput, code);
-          activityCodes.add(code);
-
-          check = ValidationChecks.addAnother(userInput, "Activity");
         }
       } catch (InputMismatchException error) {
         System.out.println("Please enter a number that has been displayed.");
@@ -343,7 +262,7 @@ public class ItineraryInput {
       }
 
       if (isValid) {
-        checkHappy = ValidationChecks.checkHappy(userInput, userChoice);
+        checkHappy = UserValidationChecks.checkHappy(userInput, userChoice);
 
         if (checkHappy.equals("yes")) {
           for (String[] addon : getExistingItineraryAddonInformation()) {
@@ -378,7 +297,7 @@ public class ItineraryInput {
 
       file.writeToFile(clientInformation);
 
-      check = ValidationChecks.addAnother(userInput, "Customers itinerary");
+      check = UserValidationChecks.addAnother(userInput, "Customers itinerary");
       if (check) {
         // To clear the console to start another intinerary
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
