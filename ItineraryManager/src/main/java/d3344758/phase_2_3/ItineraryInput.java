@@ -353,7 +353,7 @@ public class ItineraryInput {
             }
             System.out.println(addon[0]);
           }
-          setItineraryAddons(userChoice + ":" + addonPrice);
+          addItineraryAddons(userChoice + ":" + addonPrice);
         }
       }
 
@@ -456,7 +456,7 @@ public class ItineraryInput {
     return itineraryAddons;
   }
 
-  public void setItineraryAddons(String info) {
+  public void addItineraryAddons(String info) {
     this.itineraryAddons.add(info);
   }
 
