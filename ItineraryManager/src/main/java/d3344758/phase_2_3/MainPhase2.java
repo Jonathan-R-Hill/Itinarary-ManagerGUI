@@ -23,7 +23,8 @@ public class MainPhase2 {
       var addItineryToFile = new FileOperations("itineraries.txt", false);
       addItineryToFile.checkCreateFile();
       customerInput.populateExistingData();
-      customerInput.gatherInformation(userInput, addItineryToFile);
+      customerInput.inputActivities(userInput);
+//      customerInput.gatherInformation(userInput, addItineryToFile);
       var generateReceipt = new ReceiptGeneration(customerInput.getActivityInformation(),
               customerInput.getItineraryAddons(), customerInput.getActivityCodes());
 

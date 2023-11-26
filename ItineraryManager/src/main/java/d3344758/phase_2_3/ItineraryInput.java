@@ -29,8 +29,8 @@ public class ItineraryInput {
 
   // TODO JavaDoc
   public void populateExistingData() {
-    FileOperations readActivities = new FileOperations("activities.txt", true);
-    FileOperations readItineraryAddons = new FileOperations("addons.txt", true);
+    var readActivities = new FileOperations("activities.txt", true);
+    var readItineraryAddons = new FileOperations("addons.txt", true);
     readActivities.checkCreateFile();
     readItineraryAddons.checkCreateFile();
     setActivityInformation(readActivities.readFile());
@@ -152,31 +152,11 @@ public class ItineraryInput {
   }
 
   private String addonRequired(Scanner userInput, String activityCode) {
-    List<String> addonsAdded = new ArrayList<>();
-
-    System.out.println("All activity addons are provided by\n------> Exciting Activities Ltd <------");
-
-    while (true) {
-      System.out.println("""
-                Please choose the addons you would like if any. 
-                For Insurance. Enter: INS  (costs £20.00)
-                For Travel. Enter: TRV (costs £2.00)
-                For Photography. Enter: PHO  (costs £10.00)
-                If none are required. Enter: none""");
-
-      String userChoice = userInput.nextLine().toUpperCase();
-
-      if (!addonsAdded.contains(userChoice)) {
-        boolean validChoice = AddonValidation.handleAddonChoice(userInput, activityCode, addonsAdded, userChoice);
-
-        if (validChoice) {
-          System.out.println("Addon added.");
-          return activityCode;
-        }
-      } else {
-        System.out.println("That has already been added to the Activity.");
-      }
-    }
+    String addons = ActivityAddonsRequired.check(userInput, activityCode);
+    
+    String codeWithAddons = activityCode + ":" + addons;
+    System.out.println(codeWithAddons);
+    return codeWithAddons;
   }
 
   // TODO JavaDoc  --- test -- fix
@@ -215,10 +195,10 @@ public class ItineraryInput {
               String[] activityInfo = getActivityInformation().get(userChoice);
               String code = activityInfo[1];
               activities.add(getExsistingActivities()[userChoice]);
-
+              System.out.println(code);
               code = addonRequired(userInput, code);
               activityCodes.add(code);
-
+              
               check = UserValidationChecks.addAnother(userInput, "Activity");
             }
           }
@@ -237,49 +217,39 @@ public class ItineraryInput {
     boolean check = true;
 
     while (check) {
-      boolean isValid = true;
-      String checkHappy = "";
-      String addonPrice = "";
-
       System.out.println("""
-                         Would you like any Itinerary addons?
-                         Please enter the name of the addon you would like as it is wrote
-                         If you do not require any. Enter: none""");
+                             Would you like any Itinerary addons?
+                             Please enter the name of the addon you would like as it is written.
+                             If you do not require any, enter: none""");
+
       for (String[] addon : getExistingItineraryAddonInformation()) {
         System.out.println(addon[0].trim());
       }
+
       String userChoice = userInput.nextLine().toLowerCase();
-
-      if (!getItineraryAddons().isEmpty()) {
-        for (String addon : getItineraryAddons()) {
-          String[] addonSplit = addon.split(":");
-          if (userChoice.equals(addonSplit[0])) {
-            isValid = false;
-            System.out.printf("\"%s\" has already been added. Please chose a different option.\n", userChoice);
-            break;
-          }
-        }
+      
+      if (userChoice.equals("none")) {
+        check = false;
+        break;
       }
-
-      if (isValid) {
-        checkHappy = UserValidationChecks.checkHappy(userInput, userChoice);
-
-        if (checkHappy.equals("yes")) {
-          for (String[] addon : getExistingItineraryAddonInformation()) {
-            if (addon[0].equals(userChoice)) {
-              addonPrice = addon[1];
-              break;
+      
+      if (!userChoice.equals("none")) {
+        if (ItineraryAddonErrorChecks.isValidItineraryAddons(userChoice, getItineraryAddons())) {
+          if (ItineraryAddonErrorChecks.isHappyWithChoice(userInput, userChoice)) {
+            for (String[] addon : getExistingItineraryAddonInformation()) {
+              if (addon[0].equals(userChoice)) {
+                String addonPrice = addon[1];
+                addItineraryAddons(userChoice + ":" + addonPrice);
+                break;
+              }
             }
-            System.out.println(addon[0]);
           }
-          addItineraryAddons(userChoice + ":" + addonPrice);
         }
       }
-
     }
   }
-
   // TODO finish method 
+
   public void gatherInformation(Scanner userInput, FileOperations file) {
     boolean check = true;
 

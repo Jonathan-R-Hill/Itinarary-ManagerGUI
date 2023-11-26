@@ -1,8 +1,6 @@
 package d3344758.phase_2_3;
 
 import org.apache.commons.lang3.StringUtils;
-import java.util.List;
-import java.util.Scanner;
 
 /**
  *
@@ -37,6 +35,4 @@ public class NameValidation {
       return false;
     }
   }
-
-  
 }
