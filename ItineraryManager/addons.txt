@@ -1,2 +1,5 @@
-lunch	4.00
-room	75.00
+Travel	TRV	500
+Insurance	INS	2000
+Photography	PHO	1500
+Travel	TRV	1000
+PPE	PPE	600.0
