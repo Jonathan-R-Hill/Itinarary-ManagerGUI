@@ -3,12 +3,14 @@ package Main;
 import AdminCreation.NewActivityInput;
 import AdminCreation.NewAddonInput;
 import AdminCreation.NewItineraryAddon;
+import GUI.GuiMain;
 
 import ItineraryReceiptGeneration.GenerateReceipt;
 import ItineraryInput.ItineraryMain;
 
 import Objects.Activity;
 import Objects.ActivityAddon;
+import Objects.Itinerary;
 import Objects.ItineraryAddon;
 import Utility.FileOperations;
 
@@ -37,13 +39,15 @@ public class ProgramChoice {
     while (!staffChoice.equals("custom")
             && !staffChoice.equals("activity")
             && !staffChoice.equals("activity addon")
-            && !staffChoice.equals("itinerary addon")) {
+            && !staffChoice.equals("itinerary addon")
+            && !staffChoice.equals("gui")) {
 
       System.out.println("""
                          To add a new activity, enter: activity
                          To add a new activity add-on, enter: activity addon
-                         To add a customers itinarary enter: custom
                          To add a new itinerary addon, enter: itinerary addon
+                         To add a customers itinarary enter: custom
+                         To load the existing itineraries, enter: gui
                          """);
       staffChoice = userInput.nextLine().toLowerCase();
     }
@@ -57,6 +61,8 @@ public class ProgramChoice {
         activityAddon(userInput);
       case "itinerary addon" ->
         itineraryAddon(userInput);
+      case "gui" ->
+        gui();
     }
   }
 
@@ -141,6 +147,18 @@ public class ProgramChoice {
     var addAddonToFile = new FileOperations("itineraryAddons.txt", false);
     addAddonToFile.checkCreateFile();
     addItineraryAddon.collectInformation(userInput, addAddonToFile);
+  }
+  
+  /**
+   * TODO JavDoc complete method
+   */
+  private static void gui() {
+    var readItineraries = new FileOperations("itineraries.txt", false);
+    readItineraries.checkCreateFile();
+    
+    var gui = new GuiMain(readItineraries.readItineraryFile());
+    gui.main();
+    
   }
 
 }

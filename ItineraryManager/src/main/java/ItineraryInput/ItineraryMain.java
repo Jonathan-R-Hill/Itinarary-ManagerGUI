@@ -61,6 +61,10 @@ public class ItineraryMain {
         itineraryAddonsString = itineraryAddonsString + addon.getItineraryAddonName() + ",";
       }
     }
+    
+    if (itineraryAddons.isEmpty()) {
+      itineraryAddonsString = "NONE";
+    }
 
     String information = getReferenceNumber() + "\t" + getDate() + "\t" + getClientName() + "\t"
             + getTotalCost() + "\t" + totalActivities + "\t" + getActivityCodes() + "\t" + getTotalPeople()

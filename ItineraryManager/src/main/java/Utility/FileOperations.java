@@ -2,6 +2,7 @@ package Utility;
 
 import Objects.Activity;
 import Objects.ActivityAddon;
+import Objects.Itinerary;
 import Objects.ItineraryAddon;
 
 import java.io.*;
@@ -81,6 +82,8 @@ public class FileOperations {
   }
 
   /**
+   * Reads data from a file and creates a list of ActivityAddon objects.
+   *
    * The file should contain tab-separated information for each activity add-on, and each line
    * represents an add-on with specific details. The values are split by tabs, and the method
    * creates an ActivityAddon object for each line, assuming the correct number of fields are
@@ -122,10 +125,16 @@ public class FileOperations {
 
     return addons;
   }
-  
+
   /**
-   * 
-   * @return  A list of ItineraryAddon objects read from the file
+   * Reads data from a file and creates a list of ItineraryAddon objects.
+   *
+   * The file should contain tab-separated information for each itinerary add-on, and each line
+   * represents an add-on with specific details. The values are split by tabs, and the method
+   * creates an ItineraryAddon object for each line, assuming the correct number of fields are
+   * present.
+   *
+   * @return A list of ItineraryAddon objects read from the file
    */
   public List<ItineraryAddon> readItineraryAddonFile() {
     List<ItineraryAddon> addons = new ArrayList<>();
@@ -158,6 +167,48 @@ public class FileOperations {
     }
 
     return addons;
+  }
+  
+  /**
+   * Reads data from a file and creates a list of Itinerary objects.
+   *
+   * The file should contain tab-separated information for each itinerary, and each line
+   * represents an itinerary with specific details. The values are split by tabs, and the method
+   * creates an Itinerary object for each line, assuming the correct number of fields are
+   * present.
+   *
+   * @return A list of Itinerary objects read from the file
+   */
+  public List<Itinerary> readItineraryFile() {
+    List<Itinerary> Itineraries = new ArrayList<>();
+
+    try (Scanner scanner = new Scanner(new File(this.fileName))) {
+      while (scanner.hasNextLine()) {
+        String line = scanner.nextLine();
+        String[] parts = line.split("\t");
+
+        if (parts.length == 8) {
+          String name = parts[2];
+          String totalPeople = parts[6];
+          String date = parts[1];
+          String reference = parts[0];
+          String totalCostPence = parts[3];
+          String totalActivities = parts[4];
+          String activityCodes = parts[5];
+          String itineraryAddons = parts[7];
+
+          var itnerary = new Itinerary(name, totalPeople, date, reference, totalCostPence, 
+                  totalActivities, activityCodes, itineraryAddons);
+          Itineraries.add(itnerary);
+        } else {
+          System.out.println("Skipping invalid line: " + line);
+        }
+      }
+    } catch (FileNotFoundException error) {
+      error.printStackTrace();
+    }
+
+    return Itineraries;
   }
 
   /**
