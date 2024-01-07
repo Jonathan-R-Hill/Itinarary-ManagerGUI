@@ -1,7 +1,10 @@
 package ItineraryInput;
 
 import Utility.UserValidationChecks;
+
+import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -17,9 +20,9 @@ public class ClientDateReference {
 
   /**
    * Prompts the user to input a date for booking activities. Validates the input to ensure it is in
-   * the correct format (DD-MM-YYYY) and represents either todays date or a future date. Repeats the
-   * prompt until a valid date is entered catching any parsing errors when checking the date
-   * entered.
+   * the correct format (DD-MM-YYYY) and represents a future date. Repeats the
+   * prompt until a valid date is entered catching any errors when checking the date
+   * entered is a valid date even when the user enters the valid format. 
    *
    * @param userInput The Scanner object to read user input.
    * @return A String representing the user-entered date in the format DD-MM-YYYY.
@@ -43,6 +46,8 @@ public class ClientDateReference {
 
         if (userDate.isBefore(today) || userDate.isEqual(today)) {
           System.out.println("The date entered is either in the past or today. Please enter a future date.");
+        } else if (!isValidDate(userDateInput) || !checkLeapYear(userDateInput)) {
+          System.out.println("Please ensure you are entering a valid date.");
         } else {
           if (UserValidationChecks.checkHappy(userInput, userDateInput).equals("yes")) {
             System.out.println("The date is set for: " + userDate.format(formatter));
@@ -50,6 +55,8 @@ public class ClientDateReference {
           }
         }
       } catch (DateTimeParseException e) {
+        System.out.println("Please ensure you enter a valid date in the format: DD-MM-YYYY");
+      } catch (DateTimeException e) {
         System.out.println("Please ensure you enter a valid date in the format: DD-MM-YYYY");
       }
     }
@@ -79,6 +86,44 @@ public class ClientDateReference {
 
     String paddedDate = String.join("-", newDate);
     return paddedDate;
+  }
+
+  /**
+   * Checks the date is a valid date.
+   *
+   * @param date The users date selection in the format DD-MM-YYYY
+   * @return (boolean) true if the date is valid; false if invalid
+   */
+  private static boolean isValidDate(String date) {
+    String[] splitDate = date.split("-");
+    int userDay = Integer.parseInt(splitDate[0]);
+    int userMonth = Integer.parseInt(splitDate[1]);
+
+    if (userDay >= 1 && userDay <= Month.of(userMonth).maxLength() && userMonth >= 1 && userMonth <= 12) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Checks if the month is Feb and checks if it is a leap year if the user enters a day that is
+   * after the 28th and returns true/false depending on if it is a leap year if both of these
+   * conditions are true. returns true if the date is before the 28th or the month is not Feb (2)
+   *
+   * @param date The users date selection in the format DD-MM-YYYY
+   * @return (Boolean) true if the date is valid; false if invalid
+   */
+  private static boolean checkLeapYear(String date) {
+    String[] splitDate = date.split("-");
+
+    int userDate = Integer.parseInt(splitDate[0]);
+    int userMonth = Integer.parseInt(splitDate[1]);
+    int userYear = Integer.parseInt(splitDate[2]);
+
+    if (userMonth == 2 && userDate > 28) {
+      return ((userYear % 4 == 0 && userYear % 100 != 0) || userYear % 400 == 0);
+    }
+    return true;
   }
 
   /**

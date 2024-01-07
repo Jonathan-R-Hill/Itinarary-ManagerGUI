@@ -45,6 +45,6 @@ public class ClientDetailsOutput {
     int widthForPadding = 103 - costBreakdownString.length();
     int widthEachSide = widthForPadding / 2;
 
-    System.out.printf("| %" + widthEachSide + "s%s%" + widthEachSide + "s |%n", "", costBreakdownString, "");
+    System.out.printf("| %" + widthEachSide + "s%s%" + widthEachSide + "s  |%n", "", costBreakdownString, "");
   }
 }
