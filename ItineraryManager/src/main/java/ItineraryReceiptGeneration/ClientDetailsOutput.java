@@ -39,4 +39,12 @@ public class ClientDetailsOutput {
 
     System.out.printf("| %-" + (widthForPadding + activityStringLen) + "s%s |%n", totalActivitiesString, attendeesString);
   }
+
+  protected static void outputCostBreakdown() {
+    String costBreakdownString = "Cost Breakdown";
+    int widthForPadding = 103 - costBreakdownString.length();
+    int widthEachSide = widthForPadding / 2;
+
+    System.out.printf("| %" + widthEachSide + "s%s%" + widthEachSide + "s |%n", "", costBreakdownString, "");
+  }
 }

@@ -19,10 +19,10 @@ public class ItineraryMain {
   private int totalCost = 0;
 
   /**
-   * Run the necessary methods to collect user data and sets the class variables for later use.
-   * As well as creating spaces between each method call to make it easier to
-   * read console output for the user.
-   * 
+   * Run the necessary methods to collect user data and sets the class variables for later use. As
+   * well as creating spaces between each method call to make it easier to read console output for
+   * the user.
+   *
    * @param userInput A Scanner Object used to collect user input
    */
   public void collectInformation(Scanner userInput) {
@@ -45,19 +45,27 @@ public class ItineraryMain {
     setItineraryAddons(ClientItineraryAddons.collectUserChoice(userInput));
     System.out.println("\n\n");
   }
-  
+
   /**
-   * Collects all information as a tab separated String then writes that data to
-   * A file using the 'FileOperations' object passed in as a parameter. 
-   * 
+   * Collects all information as a tab separated String then writes that data to A file using the
+   * 'FileOperations' object passed in as a parameter.
+   *
    * @param file A FileOperations Object that will be used to write data to a file
    */
   public void writeToFile(FileOperations file) {
+    String itineraryAddonsString = "";
+    
     int totalActivities = getActivities().size();
+    if (!itineraryAddons.isEmpty()) {
+      for ( ItineraryAddon addon : itineraryAddons) {
+        itineraryAddonsString = itineraryAddonsString + addon.getItineraryAddonName() + ",";
+      }
+    }
 
     String information = getReferenceNumber() + "\t" + getDate() + "\t" + getClientName() + "\t"
-            + getTotalCost() + "\t" + totalActivities  + "\t" + getActivityCodes() + "\t" + getTotalPeople();
-    
+            + getTotalCost() + "\t" + totalActivities + "\t" + getActivityCodes() + "\t" + getTotalPeople()
+            + "\t" + itineraryAddonsString;
+
     file.writeToFile(information);
   }
 

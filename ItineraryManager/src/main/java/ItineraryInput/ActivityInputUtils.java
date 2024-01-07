@@ -28,7 +28,7 @@ public class ActivityInputUtils {
       }
     }
 
-    System.out.println("\nIf you are done entering activities; Enter: 999");
+    System.out.println("If you are done entering activities; Enter: 999");
   }
 
   /**
@@ -42,7 +42,7 @@ public class ActivityInputUtils {
   protected static int userActivityChoice(Scanner userInput) {
     while (true) {
       try {
-        System.out.println("Please enter the activity you would like to add. Pick a number from the list provided.");
+        System.out.println("\nPlease enter the activity you would like to add. Pick a number from the list provided above");
         int userChoice = userInput.nextInt();
         userInput.nextLine();
         return userChoice;

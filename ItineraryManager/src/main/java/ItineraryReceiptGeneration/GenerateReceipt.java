@@ -31,7 +31,7 @@ public class GenerateReceipt {
     String totalCostString = String.format("Total Cost: £%6.2f", totalCost);
     int widthForPadding = 101 - sectionName.length() - totalCostString.length();
     int blankLine = 105;
-
+    
     System.out.printf("| %s%s%" + widthForPadding + "s |%n", sectionNameString, totalCostString, "");
     System.out.printf("|%" + blankLine + "s|%n", "");
   }
@@ -40,16 +40,30 @@ public class GenerateReceipt {
     float discountPercentage = DiscountCalcUtil.calcualteDiscount(totalPeople, totalActivities); // decimal
     float discountTotal = ActivitiesTotalCost * discountPercentage;
     String discountString = String.format("| Activity Discount: %.0f%%", discountPercentage * 100);
-    String discountTotalString = "Total Discount: " + String.valueOf(discountTotal);
-    
+    String discountTotalString = String.format("Total Discount: £%6.2f", discountTotal);
+
     int widthForPadding = 105 - discountString.length() - discountTotalString.length();
 
     System.out.printf("%s%" + widthForPadding + "s%s |%n", discountString, "", discountTotalString);
-    
+
     return discountTotal;
   }
 
-  // TODO JavaDoc
+  private void outputOverallTotal(float totalPrice) {
+    String totalCostString = String.format("| Total Cost: £%6.2f", totalPrice);
+    int widthForPadding = 105 - totalCostString.length();
+
+     System.out.printf("%s%" + widthForPadding + "s |%n", totalCostString, "");
+  }
+
+  /**
+   * outputs a receipt that can take any input that the user has requested totalling
+   * the cost of each item they have added to their itinerary including their details including:
+   * Lead Attendee (client), Reference code, Date of booking, Total Activities, 
+   * Total people attending as well as details of their add-ons and activities
+   * 
+   * @return (float) total cost of the itinerary
+   */
   public float generateReceipt() {
     int totalPeople = itinerary.getTotalPeople();
     int totalActivities = itinerary.getActivities().size();
@@ -60,12 +74,12 @@ public class GenerateReceipt {
     ClientDetailsOutput.clientDetailsLineOne(itinerary.getClientName(), itinerary.getReferenceNumber());
     ClientDetailsOutput.clientDetailsLineTwo(itinerary.getDate());
     ClientDetailsOutput.clientDetailsLineThree(totalActivitiesString, Conversions.convertTotalPeople(totalPeople));
-
+    ClientDetailsOutput.outputCostBreakdown();
     // Itinerary
     sectionNameOutput("Itinerary Add-ons");
     float itineraryTotalCost = ItineraryAddonOutput.outputItineraryInformation(existingItineraryAddons, itinerary.getItineraryAddons(), totalPeople);
     sectionTotalOutput("Itinerary Addons", itineraryTotalCost);
-    
+
     // Activities
     float allActivitiesCost = 0;
     sectionNameOutput("Activities");
@@ -84,11 +98,12 @@ public class GenerateReceipt {
       counter++;
     }
     sectionTotalOutput("Activities", allActivitiesCost);
-    
-    discountOutput(allActivitiesCost, totalPeople, totalActivities);
+
+    float discount = discountOutput(allActivitiesCost, totalPeople, totalActivities);
+    outputOverallTotal(allActivitiesCost + itineraryTotalCost - discount);
     ClientDetailsOutput.startEndReceipt();
 
-    return allActivitiesCost + itineraryTotalCost;
+    return allActivitiesCost + itineraryTotalCost - discount;
   }
 
 }
