@@ -52,14 +52,14 @@ public class ClientNameTotalPeople {
         numberOfPeople = userInput.nextInt();
         userInput.nextLine();
 
-        if (numberOfPeople >= 1) {
+        if (numberOfPeople >= 1 && numberOfPeople < 100 ) {
           if (UserValidationChecks.checkHappy(userInput, numberOfPeople).equals("yes")) {
             System.out.println("The total people are set as: " + numberOfPeople);
             return numberOfPeople;
           }
 
         } else {
-          System.out.println("Please ensure you enter a number equal to or greater than 1.");
+          System.out.println("Please ensure you enter a number equal to or greater than 1 and less than 100.");
         }
       } catch (InputMismatchException error) {
         System.out.println("Please enter a valid whole number. E.g: 5");

@@ -19,7 +19,7 @@ public class ClientNameValidation {
     boolean isValid = true;
     String newName = "";
     String[] nameSplit = name.trim().replaceAll("\\s+", " ").split(" ");
-    // I have a love/hate relationship with regex. 마음에 들지 않지만, 마음에 들어요
+    // regex.. 마음에 들지 않지만, 마음에 들어요
     if (nameSplit[0].length() > 1) {
       nameSplit[0] = nameSplit[0].substring(0, 1);
     }
@@ -45,7 +45,14 @@ public class ClientNameValidation {
       return false;
     }
   }
-
+  
+  /**
+   * Splits the name provided to capitalise and collect the first initial of the clients name and capitalise
+   * the start of the clients second name. 
+   * 
+   * @param name The name input by the user
+   * @return The clients name with the first letters capitalised in the format: Initial LastName
+   */
   public static String convertToTitleCase(String name) {
     String[] splitName = name.split(" ");
     String newName = "";

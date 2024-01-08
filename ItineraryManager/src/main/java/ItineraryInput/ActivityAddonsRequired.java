@@ -12,8 +12,16 @@ import java.util.Scanner;
  */
 public class ActivityAddonsRequired {
 
-  private static List<ActivityAddon> ExistingAddons = ProgramChoice.activityAddons;
+  private static final List<ActivityAddon> ExistingAddons = ProgramChoice.activityAddons;
 
+  /**
+   * Handles the user's add-on choice. Checks if the provided add-on choice is valid by verifying it
+   * is in the list of existing add-ons and has not been added before.
+   *
+   * @param addonsAdded List of add-ons already added by the user.
+   * @param userChoice The user's choice of add-on.
+   * @return True if the add-on choice is valid; false otherwise.
+   */
   private static boolean handleAddonChoice(List<String> addonsAdded, String userChoice) {
     if (!addonsAdded.contains(userChoice)) {
       for (ActivityAddon object : ExistingAddons) {
@@ -25,6 +33,9 @@ public class ActivityAddonsRequired {
     return false;
   }
 
+  /**
+   * Outputs the available add-on choices to the user in the console.
+   */
   private static void consoleOutput() {
     System.out.println("Please choose from the list below.");
     for (ActivityAddon object : ExistingAddons) {
@@ -35,6 +46,16 @@ public class ActivityAddonsRequired {
     System.out.println("If you do not require any addons or you are done entering them.\tEnter: NONE");
   }
 
+  /**
+   * Collects the user's add-on choices. Continuously prompts the user for add-on selections until
+   * the user enters "NONE" to indicate they are done. Returns a comma-separated string of the
+   * user's selected add-on codes. We also check every input to ensure it is not an add-on that has
+   * already been added to the activity.
+   *
+   * @param userInput Scanner object for user input.
+   * @param code The code associated with the activity the user is adding add-ons to.
+   * @return Comma-separated string of user's selected add-on codes.
+   */
   public static String collectUserAddons(Scanner userInput, String code) {
     List<String> addonsAdded = new ArrayList<>();
 
@@ -46,7 +67,6 @@ public class ActivityAddonsRequired {
         System.out.println("thank you for your input.\n");
         break;
       } else if (!addonsAdded.contains(userChoice)) {
-
         if (handleAddonChoice(addonsAdded, userChoice)) {
           System.out.println("Addon added.\n");
           addonsAdded.add(userChoice);

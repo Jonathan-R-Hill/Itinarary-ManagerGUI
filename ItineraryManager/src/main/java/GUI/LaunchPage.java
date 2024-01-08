@@ -19,7 +19,13 @@ public class LaunchPage {
 
   private final List<Activity> existingActivities;
   private final List<ActivityAddon> existingAddons;
-
+  
+  /**
+   * 
+   * @param customerData A list of existing Itinerary Objects
+   * @param existingActivities A list of existing Activity Objects
+   * @param existingAddons A list of existing ActivityAddon
+   */
   public LaunchPage(List<Itinerary> customerData,  List<Activity> existingActivities, List<ActivityAddon> existingAddons) {
   this.existingActivities = existingActivities;
   this.existingAddons = existingAddons;

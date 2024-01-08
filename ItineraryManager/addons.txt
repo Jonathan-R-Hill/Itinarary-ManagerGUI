@@ -1,4 +1,3 @@
-Travel	TRV	500
 Insurance	INS	2000
 Photography	PHO	1500
 Travel	TRV	1000

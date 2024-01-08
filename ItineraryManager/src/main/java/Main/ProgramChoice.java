@@ -149,13 +149,14 @@ public class ProgramChoice {
   }
 
   /**
-   * TODO JavDoc complete method
+   * Initializes and launches the graphical user interface (GUI) for viewing itineraries.
+   * This method sets up necessary file operations and creates instances of the main GUI class.
    */
   private static void gui() {
     var readItineraries = new FileOperations("itineraries.txt", false);
     var generateActivities = new FileOperations("activities.txt", false);
     var generateActivityAddons = new FileOperations("addons.txt", false);
-    
+
     readItineraries.checkCreateFile();
     generateActivities.checkCreateFile();
     generateActivityAddons.checkCreateFile();
@@ -163,7 +164,6 @@ public class ProgramChoice {
     var gui = new GuiMain(readItineraries.readItineraryFile(),
             generateActivities.readActivityFile(), generateActivityAddons.readAddonFile());
     gui.main();
-
   }
 
 }

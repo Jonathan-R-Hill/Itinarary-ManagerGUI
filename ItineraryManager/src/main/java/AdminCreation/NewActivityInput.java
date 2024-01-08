@@ -348,7 +348,7 @@ public class NewActivityInput {
         System.out.println("\n\nActivity details:");
         System.out.println("Activity name:\t" + getActivityName());
         System.out.println("Acitivty Code:\t" + getActivityCode());
-        System.out.println("Activity price:\t" + getBaseCost());
+        System.out.println("Activity price:\t£" + (float) getBaseCost() / 100);
         System.out.println("Activity location:\t" + getLocation());
         System.out.println("Activity start time:\t" + getStartTime());
         System.out.println("Activity duration:\t" + getExpectedDuration());

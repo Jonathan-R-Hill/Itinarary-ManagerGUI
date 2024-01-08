@@ -1,3 +1,5 @@
 activity: Sas Assault Course	code: SAS-10	location: Outdoor Assault Course	start: 10:15	duration: 1.00	price: 1500	description: A course design based on the SAS entry test
 activity: Cooking	code: COO-50	location: Site Kitchen	start: 12:15	duration: 1.50	price: 1250	description: A class cooking various dishes as directed by our chef
 activity: Dance	code: DAN-60	location: Activity Hall	start: 20:00	duration: 0.50	price: 1000	description: Group dance session with dance music
+activity: Arts & Crafts	code: ART-15	location: Art Studio	start: 17:00	duration: 1.00	price: 1200.00	description: A class were you will be taught various practical techniques to create new things!
+activity: Games Design	code: GAM-40	location: Computer suite	start: 18:00	duration: 1.50	price: 1500.00	description: A guided tutorial learning various game design techniques.

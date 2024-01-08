@@ -1,3 +1,5 @@
 Dinner	1000
 Breakfast	800
 Desert	800
+Accommodation	3000
+Rain Poncho	500

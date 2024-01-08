@@ -6,6 +6,13 @@ package ItineraryReceiptGeneration;
  */
 public class DiscountCalcUtil {
 
+  /**
+   * Calculates the discount based on the total number of people and total activities.
+   *
+   * @param totalPeople The total number of people in the itinerary.
+   * @param totalActivities The total number of activities in the itinerary.
+   * @return The calculated discount as a float value.
+   */
   protected static float calcualteDiscount(int totalPeople, int totalActivities) {
     float discount;
 
@@ -20,6 +27,12 @@ public class DiscountCalcUtil {
     return discount;
   }
 
+  /**
+   * Calculates the discount for itineraries with less than 10 people.
+   *
+   * @param totalActivities The total number of activities in the itinerary.
+   * @return The calculated discount as a float value.
+   */
   private static float discount10People(int totalActivities) {
     switch (totalActivities) {
       case 1, 2 -> {
@@ -34,6 +47,12 @@ public class DiscountCalcUtil {
     }
   }
 
+  /**
+   * Calculates the discount for itineraries with 10 - 19 people.
+   *
+   * @param totalActivities The total number of activities in the itinerary.
+   * @return The calculated discount as a float value.
+   */
   private static float discount20People(int totalActivities) {
     switch (totalActivities) {
       case 1, 2 -> {
@@ -48,6 +67,12 @@ public class DiscountCalcUtil {
     }
   }
 
+  /**
+   * Calculates the discount for itineraries with 20 or more people.
+   *
+   * @param totalActivities The total number of activities in the itinerary.
+   * @return The calculated discount as a float value.
+   */
   private static float discount20PlusPeople(int totalActivities) {
     switch (totalActivities) {
       case 1, 2 -> {

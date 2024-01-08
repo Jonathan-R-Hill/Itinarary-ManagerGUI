@@ -60,13 +60,12 @@ public class ClientDateReference {
         System.out.println("Please ensure you enter a valid date in the format: DD-MM-YYYY");
       }
     }
-  } // py: datetime.strptime(date, format) :(
+  } // py: datetime.strptime(date, dateFormat) :(
 
   /**
    * Take the users date and applies padding if they only entered 1 number by splitting the data and
    * looping over the split data changing anything that is length 1 to length 2 by adding a 0 in
    * front to apply the correct format.
-   *
    *
    * @param date The user date entered to have padding added
    * @return String of The formatted date in the form DD-MM-YYYY

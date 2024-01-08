@@ -9,8 +9,14 @@ import java.util.List;
  */
 public class ItineraryAddonOutput {
 
-  //TODO Itinerary
-  // TODO JavaDoc
+  /**
+   * Outputs information about selected itinerary add-ons, including cost details.
+   *
+   * @param existingItineraryAddons A list of existing itinerary add-ons.
+   * @param userChoiceAddons A list of user-selected itinerary add-ons.
+   * @param totalPeople The total number of people the itinerary applies to.
+   * @return The total cost of the selected itinerary add-ons.
+   */
   protected static float outputItineraryInformation(List<ItineraryAddon> existingItineraryAddons,
           List<ItineraryAddon> userChoiceAddons, int totalPeople) {
     float itineraryTotalCost = 0;
@@ -47,7 +53,14 @@ public class ItineraryAddonOutput {
     System.out.printf(formatString, noAddon, "");
   }
 
-  // TODO JavaDoc
+  /**
+   * Outputs information about an itinerary add-on, including cost details.
+   *
+   * @param information The name or description of the add-on.
+   * @param cost The individual cost of the add-on.
+   * @param totalPeople The total number of people the add-on applies to.
+   * @param totalCost The total cost of the add-on for all people.
+   */
   private static void outputItineraryAddon(String information, float cost, int totalPeople, float totalCost) {
     String totalAddonCost = String.format(" = £%.2f", totalCost);
     String startAddon = "|    - ";
