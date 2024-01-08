@@ -212,6 +212,7 @@ public class ExtraDetails {
 
       // Add-on Names
       for (String shortCode : addonCodes) {
+        shortCode = shortCode.replaceAll("\\[|\\]", "");
         for (ActivityAddon existingCode : existingActivityAddon) {
           if (shortCode.equals(existingCode.getShortName())) {
             addonNames.add(existingCode.getAddonName());

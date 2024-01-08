@@ -15,7 +15,8 @@ public class Main {
     System.out.println("""
                        \tWelcome to the Itinerary manager console!
                        You can chose to create a new activity, Activity add-on,
-                       Itinerary add-on or create a customers itinerary here\n""");
+                       Itinerary add-on, create a customers itinerary here or
+                       view existing Itineraryies in a simple GUI\n""");
     ProgramChoice.userChoice(userInput);
   }
 }

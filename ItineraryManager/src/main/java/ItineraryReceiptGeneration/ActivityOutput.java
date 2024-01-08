@@ -25,7 +25,7 @@ public class ActivityOutput {
     int totalActivityCostLength = totalActivityCost.length();
     int informationLength = information.length();
     int counterLength = itemCounter < 10 ? 2 : 3;
-    int widthForPadding = 100 - (counterLength + 1 + informationLength + 2 + 5 + 3 + totalActivityCostLength);
+    int widthForPadding = 100 - (counterLength + 1 + informationLength + 2 + 5 + 3 + totalActivityCostLength + 2);
 
     String itemCounterFormat = itemCounter < 10 ? "| %d." : "| %-2d.";
     String formatString = itemCounterFormat + " %-" + informationLength + "s @ £%7.2f x %-2d%s%" + widthForPadding + "s|%n";

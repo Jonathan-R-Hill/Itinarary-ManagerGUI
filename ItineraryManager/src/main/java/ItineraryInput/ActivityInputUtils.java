@@ -21,7 +21,7 @@ public class ActivityInputUtils {
     int counter = 0;
 
     for (Activity information : ExistingActivityInformation) {
-      System.out.print(counter + ": " + information.getActivityName() + "\t");
+      System.out.print(counter + ": " + information.getActivityName() + "     ");
       counter++;
       if (counter % 3 == 0 && counter != 0) {
         System.out.println(); // makes the output easier to read

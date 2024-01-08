@@ -62,7 +62,7 @@ public class GenerateReceipt {
   private float discountOutput(float ActivitiesTotalCost, float itineraryTotalCost, int totalPeople, int totalActivities) {
     float discountPercentage = DiscountCalcUtil.calcualteDiscount(totalPeople, totalActivities); // decimal
     float discountTotal = (ActivitiesTotalCost + itineraryTotalCost) * discountPercentage;
-    String discountString = String.format("| Activity Discount: %.0f%%", discountPercentage * 100);
+    String discountString = String.format("| Discount: %.0f%%", discountPercentage * 100);
     String discountTotalString = String.format("Total Discount: £%7.2f", discountTotal);
 
     int widthForPadding = 105 - discountString.length() - discountTotalString.length();
