@@ -14,28 +14,51 @@ public class GenerateReceipt {
   private final List<Activity> existingActivityInformation = ProgramChoice.activityData;
   private final List<ActivityAddon> existingAddons = ProgramChoice.activityAddons;
   private final List<ItineraryAddon> existingItineraryAddons = ProgramChoice.itineraryAddons;
-
+  
+  /**
+   * @param itinerary The object that was created for the user to enter their details
+   */
   public GenerateReceipt(ItineraryMain itinerary) {
     this.itinerary = itinerary;
   }
-
+  
+  /**
+   * Outputs the section title aligned to the left of the console along with barriers
+   * Made so it can work with any String entered.
+   * 
+   * @param information The Section title to output
+   */
   private void sectionNameOutput(String information) {
     String sectionNameString = String.format("%s", information);
     int widthForPadding = 103 - sectionNameString.length();
 
     System.out.printf("| %s%" + widthForPadding + "s |%n", sectionNameString, "");
   }
-
+  
+  /**
+   * Outputs the section name along with the total cost to the console along with barriers
+   * 
+   * @param sectionName The name of the section we are printing the total cost for.
+   * @param totalCost The total cost of a section
+   */
   private void sectionTotalOutput(String sectionName, float totalCost) {
     String sectionNameString = String.format("%s: ", sectionName);
-    String totalCostString = String.format("Total Cost: £%6.2f", totalCost);
+    String totalCostString = String.format("Total Cost: £%7.2f", totalCost);
     int widthForPadding = 101 - sectionName.length() - totalCostString.length();
     int blankLine = 105;
     
     System.out.printf("| %s%s%" + widthForPadding + "s |%n", sectionNameString, totalCostString, "");
     System.out.printf("|%" + blankLine + "s|%n", "");
   }
-
+  
+  /**
+   * Outputs the discount percentage aligned to the left and the total discount to the right along with barriers
+   * 
+   * @param ActivitiesTotalCost The total cost of activities
+   * @param totalPeople The amount of people in the itinerary
+   * @param totalActivities The total amount of activities in the itinerary
+   * @return (float) The total discount applied
+   */
   private float discountOutput(float ActivitiesTotalCost, int totalPeople, int totalActivities) {
     float discountPercentage = DiscountCalcUtil.calcualteDiscount(totalPeople, totalActivities); // decimal
     float discountTotal = ActivitiesTotalCost * discountPercentage;
@@ -48,9 +71,14 @@ public class GenerateReceipt {
 
     return discountTotal;
   }
-
+  
+  /**
+   * Outputs the total cost of the itinerary to the console along with barriers.
+   * 
+   * @param totalPrice The total price of the Itinerary
+   */
   private void outputOverallTotal(float totalPrice) {
-    String totalCostString = String.format("| Total Cost: £%6.2f", totalPrice);
+    String totalCostString = String.format("| Total Cost: £%7.2f", totalPrice);
     int widthForPadding = 105 - totalCostString.length();
 
      System.out.printf("%s%" + widthForPadding + "s |%n", totalCostString, "");

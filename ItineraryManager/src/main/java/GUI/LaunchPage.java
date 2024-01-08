@@ -1,12 +1,12 @@
 package GUI;
 
+import Objects.Activity;
+import Objects.ActivityAddon;
 import Objects.Itinerary;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import java.util.List;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,11 +17,16 @@ import javax.swing.JTable;
  */
 public class LaunchPage {
 
-  public LaunchPage(List<Itinerary> customerData) {
-    buildMainTable(customerData);
-  }
+  private final List<Activity> existingActivities;
+  private final List<ActivityAddon> existingAddons;
 
-  private void buildMainTable(List<Itinerary> customerData) {
+  public LaunchPage(List<Itinerary> customerData,  List<Activity> existingActivities, List<ActivityAddon> existingAddons) {
+  this.existingActivities = existingActivities;
+  this.existingAddons = existingAddons;
+  buildMainTable(customerData);
+}
+
+private void buildMainTable(List<Itinerary> customerData) {
     JFrame frame = new JFrame("Exciting Activities Ltd - Management Screen");
     String[] columns = {"Lead Attendee", "Total Attendees", "Total Activities", "Total Cost"};
     Object[][] data = new Object[customerData.size()][columns.length];
@@ -38,13 +43,12 @@ public class LaunchPage {
 
     table.addMouseListener(new MouseAdapter() {
       @Override
-      public void mouseClicked(MouseEvent e) {
+public void mouseClicked(MouseEvent e) {
         int row = table.rowAtPoint(e.getPoint());
         int col = table.columnAtPoint(e.getPoint());
 
         if (row >= 0 && col >= 0) {
-          var newWindow = new ExtraDetails(customerData.get(row));
-          frame.dispose();
+          var newWindow = new ExtraDetails(customerData.get(row), existingActivities, existingAddons);
         }
       }
     });

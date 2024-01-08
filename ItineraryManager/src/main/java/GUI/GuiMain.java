@@ -1,5 +1,7 @@
 package GUI;
 
+import Objects.Activity;
+import Objects.ActivityAddon;
 import Objects.Itinerary;
 
 import java.util.List;
@@ -10,14 +12,18 @@ import java.util.List;
  */
 public class GuiMain {
 
-  protected List<Itinerary> customerData;
-
-  public GuiMain(List<Itinerary> customerData) {
-    this.customerData = customerData;
+  private final List<Itinerary> customerItinerary;
+  private final List<Activity> existingActivities;
+  private final List<ActivityAddon> existingAddons;
+  
+  public GuiMain(List<Itinerary> customerItinerary, List<Activity> existingActivities, List<ActivityAddon> existingAddons ) {
+    this.customerItinerary = customerItinerary;
+    this.existingActivities = existingActivities;
+    this.existingAddons = existingAddons;
   }
 
   public void main() {
-    var launchPage = new LaunchPage(customerData);
+    var launchPage = new LaunchPage(customerItinerary, existingActivities, existingAddons);
   }
 
 }

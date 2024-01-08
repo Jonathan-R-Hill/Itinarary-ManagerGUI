@@ -67,14 +67,13 @@ public class ProgramChoice {
   }
 
   /**
-   * Creates the necessary objects to handle file IO operations for collecting data to carry out the 
-   * methods required to collect data from the user. Ensures the files required exist before attempting to
-   * read data from the files specified in the file objects. 
-   * The method then creates an itinerary Input object to collect the data and store it temporarily before
-   * saving to file.
-   * Once the user has finished filling out their required details, we create a receipt object and generate the
-   * receipt based on the information they have entered into the temporary object.
-   * Once all of this is complete we update the total cost and save all of the data provided to a file.
+   * Creates the necessary objects to handle file IO operations for collecting data to carry out the
+   * methods required to collect data from the user. Ensures the files required exist before
+   * attempting to read data from the files specified in the file objects. The method then creates
+   * an itinerary Input object to collect the data and store it temporarily before saving to file.
+   * Once the user has finished filling out their required details, we create a receipt object and
+   * generate the receipt based on the information they have entered into the temporary object. Once
+   * all of this is complete we update the total cost and save all of the data provided to a file.
    *
    * @param userInput A Scanner used to take in input from the user
    */
@@ -84,12 +83,12 @@ public class ProgramChoice {
     var generateActivityAddons = new FileOperations("addons.txt", false);
     var generateItineraryAddons = new FileOperations("itineraryAddons.txt", false);
     var saveItineraryInfo = new FileOperations("itineraries.txt", false);
-    
+
     saveItineraryInfo.checkCreateFile();
     generateActivities.checkCreateFile();
     generateActivityAddons.checkCreateFile();
     generateItineraryAddons.checkCreateFile();
-    
+
     // Populating exisisting data
     activityData = generateActivities.readActivityFile();
     activityAddons = generateActivityAddons.readAddonFile();
@@ -133,13 +132,13 @@ public class ProgramChoice {
     addAddonToFile.checkCreateFile();
     addAddon.addonCreation(userInput, addAddonToFile);
   }
-  
+
   /**
-   * Creates the necessary objects related to creating a new Itinerary Add-on. Ensures that the file for
-   * storing the add-on exists, if not it is created. Once all of the objects are created it runs the
-   * collectInformation method passing in the FileOperations Object to save the data to file once 
-   * the user is done entering the information required.
-   * 
+   * Creates the necessary objects related to creating a new Itinerary Add-on. Ensures that the file
+   * for storing the add-on exists, if not it is created. Once all of the objects are created it
+   * runs the collectInformation method passing in the FileOperations Object to save the data to
+   * file once the user is done entering the information required.
+   *
    * @param userInput A Scanner used to take in input from the user
    */
   private static void itineraryAddon(Scanner userInput) {
@@ -148,17 +147,23 @@ public class ProgramChoice {
     addAddonToFile.checkCreateFile();
     addItineraryAddon.collectInformation(userInput, addAddonToFile);
   }
-  
+
   /**
    * TODO JavDoc complete method
    */
   private static void gui() {
     var readItineraries = new FileOperations("itineraries.txt", false);
+    var generateActivities = new FileOperations("activities.txt", false);
+    var generateActivityAddons = new FileOperations("addons.txt", false);
+    
     readItineraries.checkCreateFile();
-    
-    var gui = new GuiMain(readItineraries.readItineraryFile());
+    generateActivities.checkCreateFile();
+    generateActivityAddons.checkCreateFile();
+
+    var gui = new GuiMain(readItineraries.readItineraryFile(),
+            generateActivities.readActivityFile(), generateActivityAddons.readAddonFile());
     gui.main();
-    
+
   }
 
 }

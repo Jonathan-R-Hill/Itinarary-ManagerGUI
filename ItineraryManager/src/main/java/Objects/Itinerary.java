@@ -14,18 +14,18 @@ public class Itinerary {
   String totalActivities;
   String activityCodes;
   String itineraryAddonNames;
-  
+
   /**
    * @param attendeeName The name of the lead attendee in the form 'Initial Surname(s)'
    * @param totalPeople The total people in the party
-   * @param date the date of booking for the itinerary 
+   * @param date the date of booking for the itinerary
    * @param reference The reference String in the form AA123A
    * @param totalCostPence The total cost of the Itinerary booked in pence
    * @param totalActivities The total amount of activities
    * @param activityCodes The codes of each activity that also stores the add-ons
    * @param itineraryAddonNames The names of itinerary add-ons separated by a comma ','
    */
-  public Itinerary(String attendeeName, String totalPeople, String date, String reference, 
+  public Itinerary(String attendeeName, String totalPeople, String date, String reference,
           String totalCostPence, String totalActivities, String activityCodes, String itineraryAddonNames) {
     this.attendeeName = attendeeName;
     this.totalPeople = totalPeople;
@@ -92,5 +92,13 @@ public class Itinerary {
   public void setActivityCodes(String activityCodes) {
     this.activityCodes = activityCodes;
   }
-  
+
+  public String getItineraryAddonNames() {
+    return itineraryAddonNames;
+  }
+
+  public void setItineraryAddonNames(String itineraryAddonNames) {
+    this.itineraryAddonNames = itineraryAddonNames;
+  }
+
 }
